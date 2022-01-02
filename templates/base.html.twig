@@ -6,11 +6,14 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
+            <link href="css/style.css" rel="stylesheet">
         {% endblock %}
 
         {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
+            <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+            <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+            <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+            <script src="js/script.js" defer type="text/babel"></script>
         {% endblock %}
     </head>
     <body>
