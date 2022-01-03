@@ -1,0 +1,18 @@
+form{
+  margin: 2em 10vw;
+  display: flex;
+  flex-direction: column;
+  width: 25em;
+  background-color: #1b9448;
+  padding: 1em;
+
+  button{
+    display: inline-block;
+    width: 50%;
+  }
+  a{
+    display: inline-block;
+    width: 50%;
+
+  }
+}
