@@ -23,21 +23,21 @@ class Residence
     private $ville;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $code_postal;
+    private $codePostal;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $pays;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $fichier_inventaire;
+    private $fichierInventaire;
 
     #[ORM\ManyToOne(targetEntity: user::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private $id_bailleur;
+    private $idBailleur;
 
     #[ORM\ManyToOne(targetEntity: user::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private $id_mandataire;
+    private $idMandataire;
 
     public function getId(): ?int
     {
@@ -82,12 +82,12 @@ class Residence
 
     public function getCodePostal(): ?string
     {
-        return $this->code_postal;
+        return $this->codePostal;
     }
 
-    public function setCodePostal(string $code_postal): self
+    public function setCodePostal(string $codePostal): self
     {
-        $this->code_postal = $code_postal;
+        $this->codePostal = $codePostal;
 
         return $this;
     }
@@ -106,36 +106,36 @@ class Residence
 
     public function getFichierInventaire(): ?string
     {
-        return $this->fichier_inventaire;
+        return $this->fichierInventaire;
     }
 
-    public function setFichierInventaire(string $fichier_inventaire): self
+    public function setFichierInventaire(string $fichierInventaire): self
     {
-        $this->fichier_inventaire = $fichier_inventaire;
+        $this->fichierInventaire = $fichierInventaire;
 
         return $this;
     }
 
     public function getIdBailleur(): ?user
     {
-        return $this->id_bailleur;
+        return $this->idBailleur;
     }
 
-    public function setIdBailleur(?user $id_bailleur): self
+    public function setIdBailleur(?user $idBailleur): self
     {
-        $this->id_bailleur = $id_bailleur;
+        $this->idBailleur = $idBailleur;
 
         return $this;
     }
 
     public function getIdMandataire(): ?user
     {
-        return $this->id_mandataire;
+        return $this->idMandataire;
     }
 
-    public function setIdMandataire(?user $id_mandataire): self
+    public function setIdMandataire(?user $idMandataire): self
     {
-        $this->id_mandataire = $id_mandataire;
+        $this->idMandataire = $idMandataire;
 
         return $this;
     }
