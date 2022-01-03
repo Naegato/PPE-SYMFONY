@@ -21,10 +21,10 @@ class User
     private $email;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $mot_de_passe;
+    private $motDePasse;
 
     #[ORM\Column(type: 'boolean')]
-    private $est_verifiée;
+    private $estVerifiée;
 
     public function getId(): ?int
     {
@@ -57,24 +57,24 @@ class User
 
     public function getMotDePasse(): ?string
     {
-        return $this->mot_de_passe;
+        return $this->motDePasse;
     }
 
-    public function setMotDePasse(string $mot_de_passe): self
+    public function setMotDePasse(string $motDePasse): self
     {
-        $this->mot_de_passe = $mot_de_passe;
+        $this->motDePasse = $motDePasse;
 
         return $this;
     }
 
     public function getEstVerifiée(): ?bool
     {
-        return $this->est_verifiée;
+        return $this->estVerifiée;
     }
 
-    public function setEstVerifiée(bool $est_verifiée): self
+    public function setEstVerifiée(bool $estVerifiée): self
     {
-        $this->est_verifiée = $est_verifiée;
+        $this->estVerifiée = $estVerifiée;
 
         return $this;
     }

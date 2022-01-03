@@ -13,172 +13,174 @@ class Location
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'integer')]
-    private $id_locataire;
-
-    #[ORM\Column(type: 'integer')]
-    private $id_residence;
-
     #[ORM\Column(type: 'string', length: 255)]
-    private $fichier_inventaire;
+    private $fichierInventaire;
 
     #[ORM\Column(type: 'datetime')]
-    private $date_arriver;
+    private $dateArriver;
 
     #[ORM\Column(type: 'datetime')]
-    private $date_depart;
+    private $dateDepart;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $commentaire_locataire;
+    private $commentaireLocataire;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $signature_locataire;
+    private $signatureLocataire;
 
     #[ORM\Column(type: 'datetime')]
-    private $date_validation_locataire;
+    private $dateValidationLocataire;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $commentaire_mandataire;
+    private $commentaireMandataire;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $signature_mandataire;
+    private $signatureMandataire;
 
     #[ORM\Column(type: 'datetime')]
-    private $date_validation_mandataire;
+    private $dateValidationMandataire;
+
+    #[ORM\ManyToOne(targetEntity: user::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private $idLocataire;
+
+    #[ORM\ManyToOne(targetEntity: residence::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private $idResidence;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdLocataire(): ?int
-    {
-        return $this->id_locataire;
-    }
-
-    public function setIdLocataire(int $id_locataire): self
-    {
-        $this->id_locataire = $id_locataire;
-
-        return $this;
-    }
-
-    public function getIdResidence(): ?int
-    {
-        return $this->id_residence;
-    }
-
-    public function setIdResidence(int $id_residence): self
-    {
-        $this->id_residence = $id_residence;
-
-        return $this;
-    }
-
     public function getFichierInventaire(): ?string
     {
-        return $this->fichier_inventaire;
+        return $this->fichierInventaire;
     }
 
-    public function setFichierInventaire(string $fichier_inventaire): self
+    public function setFichierInventaire(string $fichierInventaire): self
     {
-        $this->fichier_inventaire = $fichier_inventaire;
+        $this->fichierInventaire = $fichierInventaire;
 
         return $this;
     }
 
     public function getDateArriver(): ?\DateTimeInterface
     {
-        return $this->date_arriver;
+        return $this->dateArriver;
     }
 
-    public function setDateArriver(\DateTimeInterface $date_arriver): self
+    public function setDateArriver(\DateTimeInterface $dateArriver): self
     {
-        $this->date_arriver = $date_arriver;
+        $this->dateArriver = $dateArriver;
 
         return $this;
     }
 
     public function getDateDepart(): ?\DateTimeInterface
     {
-        return $this->date_depart;
+        return $this->dateDepart;
     }
 
-    public function setDateDepart(\DateTimeInterface $date_depart): self
+    public function setDateDepart(\DateTimeInterface $dateDepart): self
     {
-        $this->date_depart = $date_depart;
+        $this->dateDepart = $dateDepart;
 
         return $this;
     }
 
     public function getCommentaireLocataire(): ?string
     {
-        return $this->commentaire_locataire;
+        return $this->commentaireLocataire;
     }
 
-    public function setCommentaireLocataire(string $commentaire_locataire): self
+    public function setCommentaireLocataire(string $commentaireLocataire): self
     {
-        $this->commentaire_locataire = $commentaire_locataire;
+        $this->commentaireLocataire = $commentaireLocataire;
 
         return $this;
     }
 
     public function getSignatureLocataire(): ?string
     {
-        return $this->signature_locataire;
+        return $this->signatureLocataire;
     }
 
-    public function setSignatureLocataire(string $signature_locataire): self
+    public function setSignatureLocataire(string $signatureLocataire): self
     {
-        $this->signature_locataire = $signature_locataire;
+        $this->signatureLocataire = $signatureLocataire;
 
         return $this;
     }
 
     public function getDateValidationLocataire(): ?\DateTimeInterface
     {
-        return $this->date_validation_locataire;
+        return $this->dateValidationLocataire;
     }
 
-    public function setDateValidationLocataire(\DateTimeInterface $date_validation_locataire): self
+    public function setDateValidationLocataire(\DateTimeInterface $dateValidationLocataire): self
     {
-        $this->date_validation_locataire = $date_validation_locataire;
+        $this->dateValidationLocataire = $dateValidationLocataire;
 
         return $this;
     }
 
     public function getCommentaireMandataire(): ?string
     {
-        return $this->commentaire_mandataire;
+        return $this->commentaireMandataire;
     }
 
-    public function setCommentaireMandataire(string $commentaire_mandataire): self
+    public function setCommentaireMandataire(string $commentaireMandataire): self
     {
-        $this->commentaire_mandataire = $commentaire_mandataire;
+        $this->commentaireMandataire = $commentaireMandataire;
 
         return $this;
     }
 
     public function getSignatureMandataire(): ?string
     {
-        return $this->signature_mandataire;
+        return $this->signatureMandataire;
     }
 
-    public function setSignatureMandataire(string $signature_mandataire): self
+    public function setSignatureMandataire(string $signatureMandataire): self
     {
-        $this->signature_mandataire = $signature_mandataire;
+        $this->signatureMandataire = $signatureMandataire;
 
         return $this;
     }
 
     public function getDateValidationMandataire(): ?\DateTimeInterface
     {
-        return $this->date_validation_mandataire;
+        return $this->dateValidationMandataire;
     }
 
-    public function setDateValidationMandataire(\DateTimeInterface $date_validation_mandataire): self
+    public function setDateValidationMandataire(\DateTimeInterface $dateValidationMandataire): self
     {
-        $this->date_validation_mandataire = $date_validation_mandataire;
+        $this->dateValidationMandataire = $dateValidationMandataire;
+
+        return $this;
+    }
+
+    public function getIdLocataire(): ?user
+    {
+        return $this->idLocataire;
+    }
+
+    public function setIdLocataire(?user $idLocataire): self
+    {
+        $this->idLocataire = $idLocataire;
+
+        return $this;
+    }
+
+    public function getIdResidence(): ?residence
+    {
+        return $this->idResidence;
+    }
+
+    public function setIdResidence(?residence $idResidence): self
+    {
+        $this->idResidence = $idResidence;
 
         return $this;
     }
