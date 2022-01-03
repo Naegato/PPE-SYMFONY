@@ -29,8 +29,8 @@ class LocationFixtures extends Fixture implements DependentFixtureInterface
             $location->setCommentaireMandataire("parfait !");
             $location->setSignatureMandataire("signatureM");
             $location->setDateValidationMandataire($date);
-            $location->setIdLocataire($this->getReference('user-'.rand(1,5)));
-            $location->setIdResidence($this->getReference('Residence-'.rand(1,5)));
+            $location->setIdLocataire($this->getReference('user-'.rand(1,19)));
+            $location->setIdResidence($this->getReference('Residence-'.rand(1,19)));
             $manager->persist($location);
         }
 

@@ -22,8 +22,8 @@ class ResidenceFixtures extends Fixture implements DependentFixtureInterface
             $residence->setCodePostal("60180");
             $residence->setPays("France");
             $residence->setFichierInventaire("FichierInv-".$i.".pdf");
-            $residence->setIdBailleur($this->getReference('user-'.rand(1,5)));
-            $residence->setIdMandataire($this->getReference('user-'.rand(1,5)));
+            $residence->setIdBailleur($this->getReference('user-'.rand(1,19)));
+            $residence->setIdMandataire($this->getReference('user-'.rand(1,19)));
             $manager->persist($residence);
             $this->addReference('Residence-'.$i, $residence);
         }
