@@ -13,12 +13,6 @@ class Location
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'integer')]
-    private $id_locataire;
-
-    #[ORM\Column(type: 'integer')]
-    private $id_residence;
-
     #[ORM\Column(type: 'string', length: 255)]
     private $fichier_inventaire;
 
@@ -46,33 +40,17 @@ class Location
     #[ORM\Column(type: 'datetime')]
     private $date_validation_mandataire;
 
+    #[ORM\ManyToOne(targetEntity: user::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private $id_locataire;
+
+    #[ORM\ManyToOne(targetEntity: residence::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private $id_residence;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdLocataire(): ?int
-    {
-        return $this->id_locataire;
-    }
-
-    public function setIdLocataire(int $id_locataire): self
-    {
-        $this->id_locataire = $id_locataire;
-
-        return $this;
-    }
-
-    public function getIdResidence(): ?int
-    {
-        return $this->id_residence;
-    }
-
-    public function setIdResidence(int $id_residence): self
-    {
-        $this->id_residence = $id_residence;
-
-        return $this;
     }
 
     public function getFichierInventaire(): ?string
@@ -179,6 +157,30 @@ class Location
     public function setDateValidationMandataire(\DateTimeInterface $date_validation_mandataire): self
     {
         $this->date_validation_mandataire = $date_validation_mandataire;
+
+        return $this;
+    }
+
+    public function getIdLocataire(): ?user
+    {
+        return $this->id_locataire;
+    }
+
+    public function setIdLocataire(?user $id_locataire): self
+    {
+        $this->id_locataire = $id_locataire;
+
+        return $this;
+    }
+
+    public function getIdResidence(): ?residence
+    {
+        return $this->id_residence;
+    }
+
+    public function setIdResidence(?residence $id_residence): self
+    {
+        $this->id_residence = $id_residence;
 
         return $this;
     }

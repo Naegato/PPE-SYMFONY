@@ -31,10 +31,12 @@ class Residence
     #[ORM\Column(type: 'string', length: 255)]
     private $fichier_inventaire;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\ManyToOne(targetEntity: user::class)]
+    #[ORM\JoinColumn(nullable: false)]
     private $id_bailleur;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\ManyToOne(targetEntity: user::class)]
+    #[ORM\JoinColumn(nullable: false)]
     private $id_mandataire;
 
     public function getId(): ?int
@@ -114,24 +116,24 @@ class Residence
         return $this;
     }
 
-    public function getIdBailleur(): ?int
+    public function getIdBailleur(): ?user
     {
         return $this->id_bailleur;
     }
 
-    public function setIdBailleur(int $id_bailleur): self
+    public function setIdBailleur(?user $id_bailleur): self
     {
         $this->id_bailleur = $id_bailleur;
 
         return $this;
     }
 
-    public function getIdMandataire(): ?int
+    public function getIdMandataire(): ?user
     {
         return $this->id_mandataire;
     }
 
-    public function setIdMandataire(int $id_mandataire): self
+    public function setIdMandataire(?user $id_mandataire): self
     {
         $this->id_mandataire = $id_mandataire;
 
