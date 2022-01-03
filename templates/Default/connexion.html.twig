@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset("") }}" type="text/css">
+{% endblock %}
+
+{% block body %}
+    <form>
+        <h1>Connectez-vous</h1>
+        <label for="email">Email</label>
+        <input name="email" id="email" type="text">
+        <label for="password">Mot de passe</label>
+        <input name="password" id="password" type="text">
+        <button type="submit">Connexion</button>
+        <a href="#">Mot de passe oublié ?</a>
+    </form>
+{% endblock %}

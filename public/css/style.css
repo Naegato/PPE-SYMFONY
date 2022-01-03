@@ -1,5 +1,149 @@
+*, *::after, *::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+  font-family: sans-serif;
+}
+
+html, body {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:is(:focus, :hover) {
+  opacity: 0.7;
+}
+
 body {
-  background: red;
+  background-color: #e8e8e8;
+}
+
+.navbar {
+  background-color: #8d4222;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2em 10vw;
+  max-width: 100%;
+}
+.navbar *:not(.navbar-profil *) {
+  display: flex;
+  text-align: center;
+  padding: 0.3em 0.5em;
+  justify-content: center;
+  align-items: center;
+}
+.navbar [data-toggle] {
+  display: inherit;
+  opacity: 1;
+}
+.navbar a {
+  text-transform: uppercase;
+}
+.navbar a:is(:hover, :focus, .active) {
+  text-decoration: underline;
+}
+.navbar .navbar-brand {
+  background-color: #fff;
+}
+.navbar .navbar-profil {
+  margin-left: auto;
+}
+.navbar .navbar-profil img {
+  margin-right: 1em;
+  height: 2em;
+}
+.navbar .navbar-toggler {
+  display: none;
+  margin-left: auto;
+  height: 3em;
+  aspect-ratio: 1/1;
+  background-color: #e8e8e8;
+  border: none;
+  box-shadow: 0 0 0.3em -0.1em #252525;
+}
+.navbar .navbar-toggler::after {
+  position: absolute;
+  content: "";
+  width: 75%;
+  height: 0.3em;
+  background-color: #252525;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0.7em 0 0 #252525, 0 -0.7em 0 0 #252525;
+}
+.navbar .navbar-toggler.active::after {
+  position: absolute;
+  content: "";
+  width: 75%;
+  height: 0.3em;
+  background-color: #252525;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  box-shadow: none;
+}
+.navbar .navbar-toggler.active::before {
+  position: absolute;
+  content: "";
+  width: 75%;
+  height: 0.3em;
+  background-color: #252525;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+footer {
+  background-color: #252525;
+  position: absolute;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  color: #e8e8e8;
+  padding: 2em 10vw;
+}
+footer .contact li {
+  margin: 0.2em;
+}
+footer .version {
+  text-align: end;
+}
+
+@media screen and (max-width: 912px) {
+  .navbar {
+    align-items: center;
+  }
+  .navbar .navbar-toggler {
+    display: inline-block;
+  }
+  .navbar [data-toggle] {
+    width: 100%;
+    position: absolute;
+    display: none;
+    opacity: 0;
+  }
+  .navbar [data-toggle].active {
+    display: block;
+    opacity: 1;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

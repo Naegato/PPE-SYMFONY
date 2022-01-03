@@ -1,3 +1,152 @@
+@import "_variable.scss";
+
+*,*::after,*::before{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+  font-family: sans-serif;
+}
+
+html,body{
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+}
+
+ul{
+  list-style: none;
+}
+img{
+  max-height: 100%;
+  max-width: 100%;
+}
+
+a{
+  text-decoration: none;
+  color: inherit;
+}
+
+a:is(:focus,:hover){
+  opacity: .7;
+}
+
 body{
-  background: red;
+  background-color: $bodyBackgroundColor;
+}
+
+.navbar{
+  background-color: $navbarBackgroundColor;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2em 10vw;
+  max-width: 100%;
+  *:not(.navbar-profil *){
+    display: flex;
+    text-align: center;
+    padding: .3em .5em;
+    justify-content: center;
+    align-items: center;
+  }
+  [data-toggle]{
+    display: inherit;
+    opacity: 1;
+  }
+  a{
+    text-transform: uppercase;
+  }
+  a:is(:hover,:focus,.active){
+    text-decoration: underline;
+  }
+
+  .navbar-brand{
+    background-color: #fff;
+  }
+
+  .navbar-profil{
+    margin-left: auto;
+    img{
+      margin-right: 1em;
+      height: 2em;
+    }
+  }
+  .navbar-toggler{
+    display: none;
+    margin-left: auto;
+    height: 3em;
+    aspect-ratio: 1/1;
+    background-color: $bodyBackgroundColor ;
+    border: none;
+    box-shadow: 0 0 .3em -.1em $footerBackgroundColor;
+    &::after{
+      position: absolute;
+      content: '';
+      width: 75%;
+      height: .3em;
+      background-color: $footerBackgroundColor ;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      box-shadow: 0 .7em 0 0 $footerBackgroundColor,0 -.7em 0 0 $footerBackgroundColor;
+    }
+    &.active::after{
+      position: absolute;
+      content: '';
+      width: 75%;
+      height: .3em;
+      background-color: $footerBackgroundColor ;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%) rotate(45deg);
+      box-shadow: none;
+    }
+    &.active::before{
+      position: absolute;
+      content: '';
+      width: 75%;
+      height: .3em;
+      background-color: $footerBackgroundColor ;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%) rotate(-45deg);
+    }
+  }
+}
+
+footer{
+  background-color: $footerBackgroundColor;
+  position: absolute;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  color: $fontColor ;
+  padding: 2em 10vw;
+  .contact{
+    li{
+      margin: .2em;
+    }
+  }
+  .version{
+    text-align: end;
+  }
+}
+
+@media screen and (max-width: 912px){
+  .navbar{
+    align-items: center;
+    .navbar-toggler{
+      display: inline-block;
+    }
+    [data-toggle]{
+      width: 100%;
+      position: absolute;
+      display: none;
+      opacity: 0;
+      &.active{
+        display: block;
+        opacity: 1;
+      }
+    }
+  }
 }
