@@ -6,19 +6,23 @@
         <li class="navbar-item">
             <a href="#" class="active">Accueil</a>
         </li>
-        <li class="navbar-item">
-            <a href="#">Biens</a>
-        </li>
-        <li class="navbar-item">
-            <a href="#">Locataires</a>
-        </li>
-        <li class="navbar-item">
-            <a href="#">Mandataires</a>
-        </li>
+        {% block navbarItem %}
+            <li class="navbar-item">
+                <a href="#">Biens</a>
+            </li>
+            <li class="navbar-item">
+                <a href="#">Locataires</a>
+            </li>
+            <li class="navbar-item">
+                <a href="#">Mandataires</a>
+            </li>
+        {% endblock %}
     </ul>
-    <div class="navbar-profil" data-toggle>
-        <img src="{{ asset("image/profil.svg") }}">
-        <a href="#">Mon profil</a>
-    </div>
-    <button id="navbar-toggler" class="navbar-toggler" type="button"></button>
+    {% block navbarProfil %}
+        <div class="navbar-profil" data-toggle>
+            <img src="{{ asset("image/profil.svg") }}">
+            <a href="#">Mon profil</a>
+        </div>
+        <button id="navbar-toggler" class="navbar-toggler" type="button"></button>
+    {% endblock %}
 </nav>

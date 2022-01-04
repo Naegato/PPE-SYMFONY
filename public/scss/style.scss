@@ -23,12 +23,12 @@ img{
   max-width: 100%;
 }
 
-a{
+a,button{
   text-decoration: none;
   color: inherit;
 }
 
-a:is(:focus,:hover){
+:is(a,button):is(:focus,:hover){
   opacity: .7;
 }
 
@@ -140,10 +140,11 @@ footer{
       display: inline-block;
     }
     [data-toggle]{
-      width: 100%;
-      position: absolute;
-      display: none;
+      width: auto;
       opacity: 0;
+      display: none;
+      position: fixed ;
+      bottom: -100%;
       &.active{
         display: block;
         opacity: 1;

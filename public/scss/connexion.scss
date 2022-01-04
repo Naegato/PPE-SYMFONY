@@ -3,16 +3,45 @@ form{
   display: flex;
   flex-direction: column;
   width: 25em;
-  background-color: #1b9448;
   padding: 1em;
+  h1{
+    font-weight: normal;
+    text-shadow: 0 0 .05em #000;
+    margin-bottom: 1em;
+  }
+
+  &>div:not(:last-child){
+    display: flex;
+    flex-direction: column;
+  }
+
+  label{
+    width: auto;
+    font-size: .8em;
+    margin-bottom: .2em;
+  }
+
+  input{
+    border: 1px solid  #999;
+    border-radius: .2em;
+    font-size: 1.6em;
+    margin-bottom: 1em;
+  }
 
   button{
+    width: fit-content;
     display: inline-block;
-    width: 50%;
+    padding: .7em 2em;
+    margin-right: 2em;
+    background-color: #21b759;
+    border-radius: .5em;
+    border:none;
+    &:is(:focus,:hover){
+      text-decoration: underline;
+    }
   }
   a{
     display: inline-block;
-    width: 50%;
-
+    font-size: .7em;
   }
 }

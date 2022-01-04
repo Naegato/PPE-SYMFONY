@@ -7,11 +7,17 @@
 {% block body %}
     <form>
         <h1>Connectez-vous</h1>
-        <label for="email">Email</label>
-        <input name="email" id="email" type="text">
-        <label for="password">Mot de passe</label>
-        <input name="password" id="password" type="text">
-        <button type="submit">Connexion</button>
-        <a href="#">Mot de passe oublié ?</a>
+        <div>
+            <label for="email">Email</label>
+            <input name="email" id="email" type="email">
+        </div>
+        <div>
+            <label for="password">Mot de passe</label>
+            <input name="password" id="password" type="password">
+        </div>
+        <div>
+            <button type="submit">Connexion</button>
+            <a href="#">Mot de passe oublié ?</a>
+        </div>
     </form>
 {% endblock %}
