@@ -17,14 +17,15 @@ class User
     #[ORM\Column(type: 'string', length: 255)]
     private $role;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 45)]
     private $email;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $motDePasse;
+    private $password;
 
     #[ORM\Column(type: 'boolean')]
-    private $estVerifiée;
+    private $isVerified;
+
 
     public function getId(): ?int
     {
@@ -55,27 +56,28 @@ class User
         return $this;
     }
 
-    public function getMotDePasse(): ?string
+    public function getPassword(): ?string
     {
-        return $this->motDePasse;
+        return $this->password;
     }
 
-    public function setMotDePasse(string $motDePasse): self
+    public function setPassword(string $password): self
     {
-        $this->motDePasse = $motDePasse;
+        $this->password = $password;
 
         return $this;
     }
 
-    public function getEstVerifiée(): ?bool
+    public function getIsVerified(): ?bool
     {
-        return $this->estVerifiée;
+        return $this->isVerified;
     }
 
-    public function setEstVerifiée(bool $estVerifiée): self
+    public function setIsVerified(bool $isVerified): self
     {
-        $this->estVerifiée = $estVerifiée;
+        $this->isVerified = $isVerified;
 
         return $this;
     }
+    
 }

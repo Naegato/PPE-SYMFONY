@@ -16,14 +16,14 @@ class ResidenceFixtures extends Fixture implements DependentFixtureInterface
 
         for ($i = 0; $i < 20; $i++) {
             $residence = new Residence();
-            $residence->setNom("nom".$i);
-            $residence->setAdresse($i."rue de paris");
-            $residence->setVille("Nogent-sur-Oise");
-            $residence->setCodePostal("60180");
-            $residence->setPays("France");
-            $residence->setFichierInventaire("FichierInv-".$i.".pdf");
-            $residence->setIdBailleur($this->getReference('user-'.rand(1,19)));
-            $residence->setIdMandataire($this->getReference('user-'.rand(1,19)));
+            $residence->setName("nom".$i);
+            $residence->setAdress($i."rue de paris");
+            $residence->setCity("Nogent-sur-Oise");
+            $residence->setZipCode("60180");
+            $residence->setCountry("France");
+            $residence->setInventoryFile("FichierInv-".$i.".pdf");
+            $residence->setOwner($this->getReference('user-'.rand(1,19)));
+            $residence->setRepresentative($this->getReference('user-'.rand(1,19)));
             $manager->persist($residence);
             $this->addReference('Residence-'.$i, $residence);
         }

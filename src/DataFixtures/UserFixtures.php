@@ -19,8 +19,8 @@ class UserFixtures extends Fixture
             $user = new User();
             $user->setRole($roles[rand(0,2)]);
             $user->setEmail("mail@gmail.com");
-            $user->setMotDePasse("motdepasse1234");
-            $user->setEstVerifiée(rand(0,1)==1);
+            $user->setPassword("motdepasse1234");
+            $user->setIsVerified(rand(0,1)==1);
             $manager->persist($user);
             $this->addReference('user-'.$i, $user);
         }

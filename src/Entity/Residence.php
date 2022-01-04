@@ -14,129 +14,131 @@ class Residence
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $nom;
+    private $name;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $adresse;
+    private $adress;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $ville;
+    private $city;
+
+    #[ORM\Column(type: 'string', length: 45)]
+    private $zipCode;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $codePostal;
+    private $country;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $pays;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $fichierInventaire;
+    private $inventoryFile;
 
     #[ORM\ManyToOne(targetEntity: user::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private $idBailleur;
+    private $owner;
 
     #[ORM\ManyToOne(targetEntity: user::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private $idMandataire;
+    private $representative;
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNom(): ?string
+    public function getName(): ?string
     {
-        return $this->nom;
+        return $this->name;
     }
 
-    public function setNom(string $nom): self
+    public function setName(string $name): self
     {
-        $this->nom = $nom;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getAdresse(): ?string
+    public function getAdress(): ?string
     {
-        return $this->adresse;
+        return $this->adress;
     }
 
-    public function setAdresse(string $adresse): self
+    public function setAdress(string $adress): self
     {
-        $this->adresse = $adresse;
+        $this->adress = $adress;
 
         return $this;
     }
 
-    public function getVille(): ?string
+    public function getCity(): ?string
     {
-        return $this->ville;
+        return $this->city;
     }
 
-    public function setVille(string $ville): self
+    public function setCity(string $city): self
     {
-        $this->ville = $ville;
+        $this->city = $city;
 
         return $this;
     }
 
-    public function getCodePostal(): ?string
+    public function getZipCode(): ?string
     {
-        return $this->codePostal;
+        return $this->zipCode;
     }
 
-    public function setCodePostal(string $codePostal): self
+    public function setZipCode(string $zipCode): self
     {
-        $this->codePostal = $codePostal;
+        $this->zipCode = $zipCode;
 
         return $this;
     }
 
-    public function getPays(): ?string
+    public function getCountry(): ?string
     {
-        return $this->pays;
+        return $this->country;
     }
 
-    public function setPays(string $pays): self
+    public function setCountry(string $country): self
     {
-        $this->pays = $pays;
+        $this->country = $country;
 
         return $this;
     }
 
-    public function getFichierInventaire(): ?string
+    public function getInventoryFile(): ?string
     {
-        return $this->fichierInventaire;
+        return $this->inventoryFile;
     }
 
-    public function setFichierInventaire(string $fichierInventaire): self
+    public function setInventoryFile(string $inventoryFile): self
     {
-        $this->fichierInventaire = $fichierInventaire;
+        $this->inventoryFile = $inventoryFile;
 
         return $this;
     }
 
-    public function getIdBailleur(): ?user
+    public function getOwner(): ?user
     {
-        return $this->idBailleur;
+        return $this->owner;
     }
 
-    public function setIdBailleur(?user $idBailleur): self
+    public function setOwner(?user $owner): self
     {
-        $this->idBailleur = $idBailleur;
+        $this->owner = $owner;
 
         return $this;
     }
 
-    public function getIdMandataire(): ?user
+    public function getRepresentative(): ?user
     {
-        return $this->idMandataire;
+        return $this->representative;
     }
 
-    public function setIdMandataire(?user $idMandataire): self
+    public function setRepresentative(?user $representative): self
     {
-        $this->idMandataire = $idMandataire;
+        $this->representative = $representative;
 
         return $this;
     }
+
 }
