@@ -5,17 +5,21 @@
 {% endblock %}
 
 {% block body %}
-    <form>
+    <form action="#" method="get">
         <h1>Connectez-vous</h1>
-        <div>
+        <div class="input input-mail">
             <label for="email">Email</label>
             <input name="email" id="email" type="email">
         </div>
-        <div>
+        <div class="input input-password">
             <label for="password">Mot de passe</label>
             <input name="password" id="password" type="password">
+            <button type="button" class="button-password">
+                <img src="{{ asset('image/eye-slash-fill.svg') }}">
+                <img src="{{ asset('image/eye-fill.svg') }}">
+            </button>
         </div>
-        <div>
+        <div class="submit">
             <button type="submit">Connexion</button>
             <a href="#">Mot de passe oublié ?</a>
         </div>
