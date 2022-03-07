@@ -22,12 +22,12 @@ img {
   max-width: 100%;
 }
 
-a {
+a, button {
   text-decoration: none;
   color: inherit;
 }
 
-a:is(:focus, :hover) {
+:is(a, button):is(:focus, :hover) {
   opacity: 0.7;
 }
 
@@ -128,6 +128,52 @@ footer .version {
   text-align: end;
 }
 
+.input {
+  margin: 0.5em 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.input input {
+  font-size: 1.5em;
+  border: 1px solid #aaa;
+  border-radius: 0.3em;
+}
+.input.input-mail label::after {
+  content: "@";
+  font-size: 1.5em;
+  position: absolute;
+  bottom: 0;
+  right: 0.2em;
+  transform: translateY(100%);
+  z-index: 999;
+}
+.input.input-password {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.input.input-password label {
+  width: 100%;
+}
+.input.input-password input {
+  width: 90%;
+  display: inline-block;
+  border-radius: 0.3em 0 0 0.3em;
+  border-right: none;
+}
+.input.input-password button.button-password {
+  display: flex;
+  width: 10%;
+  border-radius: 0 0.3em 0.3em 0;
+  border: 1px solid #aaa;
+  border-left: none;
+  justify-content: center;
+  align-items: center;
+}
+.input.input-password button.button-password :last-child {
+  display: none;
+}
+
 @media screen and (max-width: 912px) {
   .navbar {
     align-items: center;
@@ -136,10 +182,11 @@ footer .version {
     display: inline-block;
   }
   .navbar [data-toggle] {
-    width: 100%;
-    position: absolute;
-    display: none;
+    width: auto;
     opacity: 0;
+    display: none;
+    position: fixed;
+    bottom: -100%;
   }
   .navbar [data-toggle].active {
     display: block;

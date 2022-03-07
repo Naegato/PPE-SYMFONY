@@ -3,16 +3,27 @@ form {
   display: flex;
   flex-direction: column;
   width: 25em;
-  background-color: #1b9448;
   padding: 1em;
 }
-form button {
-  display: inline-block;
-  width: 50%;
+form h1 {
+  font-weight: normal;
+  text-shadow: 0 0 0.05em #000;
+  margin-bottom: 1em;
 }
-form a {
-  display: inline-block;
-  width: 50%;
+form .submit {
+  margin-top: 0.5em;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+form .submit button {
+  padding: 0.5em 3em;
+  border: 1px solid #aaa;
+  border-radius: 0.5em;
+  background-color: #21b759;
+}
+form .submit button:is(:hover, :focus) {
+  text-decoration: underline;
 }
 
 /*# sourceMappingURL=connexion.css.map */

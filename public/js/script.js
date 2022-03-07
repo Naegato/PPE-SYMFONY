@@ -6,35 +6,33 @@
         this.classList.toggle("active")
         if (this.classList.contains('active')){
             for (let i=0; i<toggleItems.length;i++){
-                // console.log(toggleItems[i].style)
                 toggleItems[i].classList.add('active')
             }
         }else{
             for (let i=0; i<toggleItems.length;i++){
-                // console.log(toggleItems[i].style)
                 toggleItems[i].classList.remove('active')
             }
         }
     })
 
-    window.addEventListener("resize",function (){
-        // console.log(this.innerWidth);
-        if (this.innerWidth > 912){
-            button.classList.remove('active')
-            for (let i=0;i<toggleItems.length;i++){
-                toggleItems[i].classList.remove('active')
-                // toggleItems[i].style.position = "relative"
+    let buttonPassword = document.querySelectorAll(".input-password button")
+    console.log(buttonPassword)
+
+    for (let i = 0; i < buttonPassword.length ; i++) {
+        console.log(buttonPassword[i])
+        buttonPassword[i].addEventListener("click",function () {
+            let input = this.parentNode.querySelector('input')
+            let img = this.querySelectorAll('img')
+            if (input.type == "password"){
+                input.type = "text"
+                img[0].style.display = "none"
+                img[1].style.display = "flex"
+            }else{
+                input.type = "password"
+                img[1].style.display = "none"
+                img[0].style.display = "flex"
             }
-        }else{
-            let offset=0;
-            for (let i = 0; i < toggleItems.length; i++) {
-                // toggleItems[i].style.position = "absolute"
-                console.log(toggleItems[i])
-                console.log(toggleItems[i].getBoundingClientRect())
-                offset += toggleItems[i].getBoundingClientRect().height
-                console.log(offset)
-                toggleItems[i].style.bottom = (-1 * offset)
-            }
-        }
-    })
+        })
+    }
+
 })()
