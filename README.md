@@ -2,7 +2,11 @@
 
 ## Information :
 
+Goal : Create a rental management platform.
 
+Used technologies: SYMFONY | HTML | CSS | PHP | BOOTSTRAP | JavaScripts | MySQL
+
+Realization period: End of December 2021 to April 25, 2022.
 
 ## How to launch the project ?
 
