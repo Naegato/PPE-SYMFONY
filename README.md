@@ -2,11 +2,17 @@
 
 ## Information :
 
-Goal : Create a rental management platform.
+### Goal : 
+        
+Create a rental management platform.
 
-Used technologies: SYMFONY | HTML | CSS | PHP | BOOTSTRAP | JavaScripts | MySQL
+### Used technologies: 
+        
+SYMFONY | HTML | CSS | PHP | BOOTSTRAP | JavaScripts | MySQL
 
-Realization period: End of December 2021 to April 25, 2022.
+### Realization period: 
+        
+End of December 2021 to April 25, 2022.
 
 ## How to launch the project ?
 
@@ -14,10 +20,11 @@ First type this command to install and build the project
 
         npm install
         npm run build
+        composer install
 
 If the database wasn't create run 
 
-        php bin/console doctrine/database/create
+        php bin/console doctrine:database:create
 
 To fill the database run
 
