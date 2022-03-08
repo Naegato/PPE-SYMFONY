@@ -8,7 +8,7 @@ Create a rental management platform.
 
 ### Used technologies: 
         
-SYMFONY | HTML | CSS | PHP | BOOTSTRAP | JavaScripts | MySQL
+[SYMFONY](https://symfony.com) | [HTML](https://developer.mozilla.org/fr/docs/Web/HTML) | [CSS](https://developer.mozilla.org/fr/docs/Web/CSS) | [PHP](https://www.php.net) | [BOOTSTRAP](https://getbootstrap.com) | [JavaScripts](https://developer.mozilla.org/fr/docs/Web/JavaScript) | [MySQL](https://www.mysql.com/fr/)
 
 ### Realization period: 
         
