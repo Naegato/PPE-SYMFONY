@@ -9,12 +9,11 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name.email }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/ppe-symfony/src/Controller/TenantController.php'|file_link(0) }}">src/Controller/TenantController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/ppe-symfony/templates/tenant/index.html.twig'|file_link(0) }}">templates/tenant/index.html.twig</a></code></li>
-    </ul>
+    <h1>Hello ! ✅</h1>
+    {% if(tenants is defined) %}
+        {%include 'tenant/list.html.twig' %}
+    {% else %}
+        {%include 'tenant/view.html.twig' %}
+    {% endif %}
 </div>
 {% endblock %}

@@ -36,27 +36,25 @@ class TenantController extends AbstractController
 //        $entityManager->flush();
 //    }
 
-    #[Route('/tenant', name: 'app_tenant')]
+    #[Route('/tenant', name: 'tenants')]
     public function list(UserRepository $userRepository): Response
     {
         $tenant = $userRepository
-            ->findAll();
+            ->findUserByRoles('["tenant"]');
 
-        return $this->render('tenant/list.html.twig', [
-            'controller_name' => $tenant,
+        return $this->render('tenant/index.html.twig', [
+            'tenants' => $tenant,
         ]);
     }
 
-    #[Route('/tenant/{id}', name: 'app_tenant')]
+    #[Route('/tenant/{id}', name: 'tenant')]
     public function show(int $id, UserRepository $userRepository): Response
     {
         $tenant = $userRepository
-            ->find($id);
-
-//        dd($tenant);
+            ->findUserByIdAndRoles($id, '["tenant"]');
 
         return $this->render('tenant/index.html.twig', [
-            'controller_name' => $tenant,
+            'tenant' => $tenant['0'],
         ]);
     }
 }
