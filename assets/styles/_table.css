@@ -1,0 +1,3 @@
+.table th{
+    border-bottom: var(--secondary-border-color) solid 1px;
+}

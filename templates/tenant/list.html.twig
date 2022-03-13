@@ -1,0 +1,12 @@
+<table>
+        <tr>
+                <th>#</th>
+                <th>Email</th>
+        </tr>
+    {% for tenant in tenants %}
+        <tr>
+                <td>{{ tenant.id }}</td>
+                <td>{{ tenant.email }}</td>
+        </tr>
+    {% endfor %}
+</table>
