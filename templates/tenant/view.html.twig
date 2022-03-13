@@ -1,10 +1,29 @@
-<table>
-    <tr>
-        <th>#</th>
-        <th>Email</th>
-    </tr>
-        <tr>
-            <td>{{ tenant.id }}</td>
-            <td>{{ tenant.email }}</td>
-        </tr>
-</table>
+{% if tenant.roles[0] == "ROLE_TENANT"%}
+    {% if app.user.roles[0] != "ROLE_TENANT"%}
+        <table>
+            <tr>
+                <th>#</th>
+                <th>Email</th>
+            </tr>
+                <tr>
+                    <td>{{ tenant.id }}</td>
+                    <td>{{ tenant.email }}</td>
+                </tr>
+        </table>
+    {% elseif app.user.id == tenant.id%}
+        <table>
+            <tr>
+                <th>#</th>
+                <th>Email</th>
+            </tr>
+            <tr>
+                <td>{{ tenant.id }}</td>
+                <td>{{ tenant.email }}</td>
+            </tr>
+        </table>
+    {% else %}
+        {% include "./error/400.html.twig" %}
+    {% endif %}
+{% else %}
+    {% include "./error/404.html.twig" %}
+{% endif %}

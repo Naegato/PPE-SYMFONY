@@ -1,0 +1,12 @@
+<table>
+        <tr>
+                <th>#</th>
+                <th>Email</th>
+        </tr>
+    {% for representative in representatives %}
+        <tr>
+                <td>{{ representative.id }}</td>
+                <td>{{ representative.email }}</td>
+        </tr>
+    {% endfor %}
+</table>

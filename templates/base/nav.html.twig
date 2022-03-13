@@ -27,7 +27,7 @@
                 {% endif %}
             </ul>
             {% if app.user %}
-                <a class="nav-link bi bi-person-circle" href="/{% if app.user.roles[0] == 'ROLE_ADMINISTRATOR' %}admin{% elseif app.user.roles[0] == 'ROLE_TENANT' %}tenant{% else %}representative{% endif %}/{{ app.user.id }}"> Mon profil</a>
+                <a class="nav-link bi bi-person-circle" href="/{% if app.user.roles[0] == 'ROLE_ADMINISTRATOR' %}owner{% elseif app.user.roles[0] == 'ROLE_TENANT' %}tenant{% else %}representative{% endif %}/{{ app.user.id }}"> Mon profil</a>
             {% endif %}
         </div>
     </div>
