@@ -40,7 +40,7 @@ class TenantController extends AbstractController
     public function list(UserRepository $userRepository): Response
     {
         $tenant = $userRepository
-            ->findUserByRoles('["tenant"]');
+            ->findUserByRoles('["ROLE_TENANT"]');
 
         return $this->render('tenant/index.html.twig', [
             'tenants' => $tenant,
@@ -51,10 +51,10 @@ class TenantController extends AbstractController
     public function show(int $id, UserRepository $userRepository): Response
     {
         $tenant = $userRepository
-            ->findUserByIdAndRoles($id, '["tenant"]');
+            ->findUserById($id);
 
-        return $this->render('tenant/index.html.twig', [
-            'tenant' => $tenant['0'],
-        ]);
+       return $this->render('tenant/index.html.twig', [
+                'tenant' => $tenant['0'],
+            ]);
     }
 }
