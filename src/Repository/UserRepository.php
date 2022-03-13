@@ -68,8 +68,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->andWhere('u.roles = :val')
             ->setParameter('val', $roles)
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     public function findUserById($id)
@@ -78,8 +77,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->andWhere('u.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
-            ->getResult()
-            ;
+            ->getOneOrNullResult();
     }
 
     // /**

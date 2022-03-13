@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container d-flex flex-column mt-5 ms-0 ms-md-5">
+        <h1>{{ app.user.name }} {{ app.user.lastname }}</h1>
+        <p>
+            Vous étes inscrit en tant que
+            <strong>
+                {% if app.user.roles[0] == 'ROLE_TENANT' %} locataire {% elseif app.user.roles[0] == 'ROLE_REPRESENTATIVE' %} mandataire {% else %} administrateur {% endif %}
+            </strong>
+            sur la plateforme
+        </p>
+        <h2>Action :</h2>
+        <ul class="index-list">
+            {% if app.user.roles[0] != 'ROLE_ADMINISTRATOR' %}
+                <li>
+                    <a href="#">Afficher mes locations</a>
+                </li>
+                <li>
+                    <a href="#">Supprimer mon compte</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="#">Afficher mes biens</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+{% endblock %}
