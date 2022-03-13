@@ -29,6 +29,7 @@ If the database wasn't create run
 To fill the database run
 
         php bin/console doctrine:schema:update --dump-sql --force
+        php bin/console doctrine:fixtures:load
 
 After making sure that the database has been filled and the project has been built you can type
 
