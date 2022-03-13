@@ -8,13 +8,12 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/ppe-symfony/src/Controller/RepresentativeController.php'|file_link(0) }}">src/Controller/RepresentativeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/ppe-symfony/templates/representative/index.html.twig'|file_link(0) }}">templates/representative/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div class="example-wrapper">
+        <h1>Hello ! ✅</h1>
+        {% if(representatives is defined) %}
+            {%include 'representative/list.html.twig' %}
+        {% else %}
+            {%include 'representative/view.html.twig' %}
+        {% endif %}
+    </div>
 {% endblock %}

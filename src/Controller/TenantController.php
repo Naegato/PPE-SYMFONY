@@ -36,14 +36,14 @@ class TenantController extends AbstractController
 //        $entityManager->flush();
 //    }
 
-    #[Route('/tenant', name: 'tenants')]
+    #[Route('/tenants', name: 'tenants')]
     public function list(UserRepository $userRepository): Response
     {
-        $tenant = $userRepository
+        $tenants = $userRepository
             ->findUserByRoles('["ROLE_TENANT"]');
 
         return $this->render('tenant/index.html.twig', [
-            'tenants' => $tenant,
+            'tenants' => $tenants,
         ]);
     }
 
