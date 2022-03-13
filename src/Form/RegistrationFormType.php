@@ -8,15 +8,22 @@ use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RegistrationFormType extends AbstractType
 {
+    private TokenStorageInterface $token;
+
+    public function __construct(TokenStorageInterface $token)
+    {
+        $this->token = $token;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -45,29 +52,33 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
-            ])
-            ->add('roles',ChoiceType::class, [
-                'required' => true,
-                'multiple' => false,
-                'expanded' => false,
-                'choices' => [
-                    'Tenant' => 'ROLE_TENANT',
-                    'Representative' => 'ROLE_REPRESENTATIVE',
-                    'Administrator' => 'ROLE_ADMINISTRATOR',
-                ],
             ]);
 
-        $builder->get('roles')
-            ->addModelTransformer(new CallbackTransformer(
-                function ($rolesArray) {
-                    // transform the array to a string
-                    return count($rolesArray)? $rolesArray[0]: null;
-                },
-                function ($rolesString) {
-                    // transform the string back to an array
-                    return [$rolesString];
-                }
-            ));
+        if ($this->token->getToken()->getUser()->getRoles()[0] === "ROLE_ADMINISTRATOR") {
+            $builder->add('roles',ChoiceType::class, [
+                    'required' => true,
+                    'multiple' => false,
+                    'expanded' => false,
+                    'choices' => [
+                        'Tenant' => 'ROLE_TENANT',
+                        'Representative' => 'ROLE_REPRESENTATIVE',
+                        'Administrator' => 'ROLE_ADMINISTRATOR',
+                    ],
+                ]);
+
+            $builder->get('roles')
+                ->addModelTransformer(new CallbackTransformer(
+                    function ($rolesArray) {
+                        // transform the array to a string
+                        return count($rolesArray)? $rolesArray[0]: null;
+                    },
+                    function ($rolesString) {
+                        // transform the string back to an array
+                        return [$rolesString];
+                    }
+                ));
+        }
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
