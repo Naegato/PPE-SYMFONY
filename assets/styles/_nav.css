@@ -1,0 +1,20 @@
+nav {
+    background-color: var(--primary-color);
+}
+
+nav .container-fluid .navbar-brand img {
+    height: 3.5rem;
+}
+
+nav .nav-link, nav .nav-link.active {
+    color: var(--text-primary) ;
+    font-size: 1.7em;
+}
+
+nav .nav-link:hover {
+    color: var(--text-secondary) ;
+}
+
+nav .nav-link.active {
+    text-decoration: underline ;
+}
