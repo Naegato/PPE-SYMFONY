@@ -3,6 +3,7 @@
 {% block body %}
 
     <div class="container d-flex flex-column mt-5 ms-0 ms-md-5 col-12 col-sm-8 col-md-4 col-xl-2">
+        <a href="{{ path('app_register') }}">Ajouter un nouveau {{ type }}</a>
         {% if users is defined and users is not null %}
             <table>
                 <tr>
@@ -15,6 +16,9 @@
                     <td>
                         link
                     </td>
+                    <td>
+                        supprimer
+                    </td>
                 </tr>
                 {% for user in users %}
                     <tr>
@@ -26,6 +30,9 @@
                         </td>
                         <td>
                             <a href="{{ path('userId',{id:user.id}) }}">link</a>
+                        </td>
+                        <td>
+                            <a class="bi bi-dash-circle-fill" href="{{ path('deleteId')}}"></a>
                         </td>
                     </tr>
                 {% endfor %}

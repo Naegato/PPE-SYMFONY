@@ -56,7 +56,7 @@ class RegistrationController extends AbstractController
             );
 
             if ($this->token->getToken()->getUser()->getRoles()[0] === "ROLE_REPRESENTATIVE") {
-                $user->setRoles(["ROLE_TETANT"]);
+                $user->setRoles(["ROLE_TENANT"]);
             }
 
             $entityManager->persist($user);

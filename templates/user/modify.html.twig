@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container d-flex flex-column mt-5 ms-0 ms-md-5 col-12 col-sm-8 col-md-4">
+        {% if user is defined and user is not empty %}
+            {% if app.user.roles[0] == 'ROLE_TENANT' %}
+                {% if app.user.id == user.id %}
+                    <h1>Register</h1>
+                    {{ form_start(modifyForm) }}
+                    <div class="form-flex-row">
+                        {{ form_row(modifyForm.email, {value: user.email}) }}
+                    </div>
+                    <div class="form-flex-row">
+                        {{ form_row(modifyForm.name, {
+                            label: 'Prénom',
+                            value: user.name,
+                        })}}
+                    </div>
+                    <div class="form-flex-row">
+                        {{ form_row(modifyForm.lastname, {
+                            label: 'Nom',
+                            value: user.lastname,
+                        }) }}
+                    </div>
+                    <div class="form-flex-row">
+                        {{ form_row(modifyForm.plainPassword, {
+                            label: 'Password'
+                        }) }}
+                    </div>
+                    <button type="submit" class="btn">Register</button>
+                    {{ form_end(modifyForm) }}
+                {% else %}
+                    {% include 'error/400.html.twig' %}
+                {% endif %}
+            {% else %}
+                <h1>Register</h1>
+                {{ form_start(modifyForm) }}
+                <div class="form-flex-row">
+                    {{ form_row(modifyForm.email, {value: user.email}) }}
+                </div>
+                <div class="form-flex-row">
+                    {{ form_row(modifyForm.name, {
+                        label: 'Prénom',
+                        value: user.name,
+                    })}}
+                </div>
+                <div class="form-flex-row">
+                    {{ form_row(modifyForm.lastname, {
+                        label: 'Nom',
+                        value: user.lastname,
+                    }) }}
+                </div>
+                <div class="form-flex-row">
+                    {{ form_row(modifyForm.plainPassword, {
+                        label: 'Password'
+                    }) }}
+                </div>
+                <button type="submit" class="btn">Register</button>
+                {{ form_end(modifyForm) }}
+            {% endif %}
+        {% elseif app.user.roles[0] == 'TENANT' %}
+            {% include 'error/400.html.twig' %}
+        {% else %}
+            {% include 'error/404.html.twig' %}
+        {% endif %}
+    </div>
+
+{% endblock %}
