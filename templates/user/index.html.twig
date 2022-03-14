@@ -1,20 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="container d-flex flex-column mt-5 ms-0 ms-md-5 col-12 col-sm-8 col-md-4 col-xl-2">
+        {% if user is defined and user is not null %}
+            {% if app.user.roles[0] == 'ROLE_TENANT' %}
+                {% if app.user.id == user.id %}
+                    <h1>{{ user.name }} {{ user.lastname }}</h1>
+                    <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+                    <a class="btn btn-primary" href="#">Modifier mon profil</a>
+                {% else %}
+                    {% include "error/400.html.twig"%}
+{#                    <div>Vous n'avez pas l'autorization d'acceder a ceci</div>#}
+                {% endif %}
+            {% elseif app.user.roles[0] == 'ROLE_REPRESENTATIVE' %}
+                {% if user is defined and user is not empty and user.roles[0] != 'ROLE_ADMINISTRATOR' %}
+                    <h1>{{ user.name }} {{ user.lastname }}</h1>
+                    <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+                    {% if app.user.id == user.id %}
+                        <a class="btn btn-primary" href="#">Modifier mon profil</a>
+                    {% elseif user.roles[0] == "ROLE_TENANT" %}
+                        <a class="btn btn-primary" href="#">Modifier le profil</a>
+                    {% endif %}
+                {% else %}
+                    {% include "../error/400.html.twig"%}
+{#                    <div>Vous n'avez pas l'autorization d'acceder a ceci</div>#}
+                {% endif %}
+            {% else %}
+                    <h1>{{ user.name }} {{ user.lastname }}</h1>
+                    <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+                    {% if app.user.id == user.id %}
+                        <a class="btn btn-primary" href="#">Modifier mon profil</a>
+                    {% elseif app.user.roles[0] == "ROLE_ADMINISTRATOR" %}
+                        <a class="btn btn-primary" href="#">Modifier le profil</a>
+                    {% endif %}
+            {% endif %}
+        {% elseif error is defined and error is not null %}
+            {% if error == 'noid' %}
+                <div>Cette url n'essecite un id, exemple : /user/2 </div>
+            {% elseif error == 'unexist' %}
+                <div>Cette utilisateur n'existe pas </div>
+            {% else %}
+                <div>{{ error }}</div>
+            {% endif %}
+        {% endif %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/maxim/PhpstormProjects/PPE-SYMFONY/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/maxim/PhpstormProjects/PPE-SYMFONY/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
-    </ul>
-</div>
+    </div>
+
 {% endblock %}

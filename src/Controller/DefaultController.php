@@ -7,13 +7,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
-    /**
-     * @Route(name="index", path="/")
-     */
+    #[Route('/', name: 'index')]
 
     public function index()
     {
-        return $this->render("./base.html.twig");
+        return $this->render("./base/index.html.twig");
     }
 
 }

@@ -2,3 +2,17 @@
 @import "_table.css";
 @import "_nav.css";
 @import "_footer.css";
+
+.index-list {
+    list-style: '>' ;
+}
+
+.index-list a {
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+
+.form-flex-row > div {
+    display: flex;
+    justify-content: space-between;
+}
