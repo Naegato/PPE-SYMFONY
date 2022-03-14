@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class RegistrationFormType extends AbstractType
+class ModifyFormType extends AbstractType
 {
     private TokenStorageInterface $token;
 
@@ -29,17 +29,9 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class,)
-            ->add('name')
-            ->add('lastname')
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-            ])
+            ->add('email', EmailType::class)
+            ->add('prenom')
+            ->add('nom')
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -58,31 +50,8 @@ class RegistrationFormType extends AbstractType
                 ],
             ]);
 
-        if ($this->token->getToken()->getUser()->getRoles()[0] === "ROLE_ADMINISTRATOR") {
-            $builder->add('roles',ChoiceType::class, [
-                    'required' => true,
-                    'multiple' => false,
-                    'expanded' => false,
-                    'choices' => [
-                        'Tenant' => 'ROLE_TENANT',
-                        'Representative' => 'ROLE_REPRESENTATIVE',
-                        'Administrator' => 'ROLE_ADMINISTRATOR',
-                    ],
-                ]);
-
-            $builder->get('roles')
-                ->addModelTransformer(new CallbackTransformer(
-                    function ($rolesArray) {
-                        // transform the array to a string
-                        return count($rolesArray)? $rolesArray[0]: null;
-                    },
-                    function ($rolesString) {
-                        // transform the string back to an array
-                        return [$rolesString];
-                    }
-                ));
-        }
-
+        dump($this->token->getToken()->getUser()->getUserIdentifier());
+        die;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
