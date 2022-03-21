@@ -2,44 +2,37 @@
 
 {% block body %}
 
-    <div class="container d-flex flex-column mt-5 ms-0 ms-md-5 col-12 col-sm-8 col-md-4 col-xl-3">
-        <a href="{{ path('app_register') }}">Ajouter un nouveau {% if type == 'ROLE_TENANT' %} locataire {% elseif type == 'ROLE_REPRESENTATIVE' %} mandataire {% else %} administrateur {% endif %}</a>
-        {% if users is defined and users is not null %}
-            <table>
-                <tr>
-                    <td>
-                        Nom
-                    </td>
-                    <td>
-                        Prenom
-                    </td>
-                    <td>
-                        link
-                    </td>
-                    <td>
-                        supprimer
-                    </td>
-                </tr>
+{#    <div class="container d-flex flex-column mt-5 ms-0 ms-md-5 col-12 col-sm-8 col-md-4 col-xl-3">#}
+    <div class="container d-flex flex-column mt-5 ms-0 ms-md-5 offset-0 col col-md-6 offset-md-2">
+        <div class="d-flex align-items-center justify-content-between title-list" >
+            <h2>Gestion des {% if type == 'ROLE_TENANT' %} locataires {% elseif type == 'ROLE_REPRESENTATIVE' %} mandataires {% else %} administrateurs {% endif %}</h2>
+            <a class="btn btn-success" href="{{ path('app_register') }}">Nouveau {% if type == 'ROLE_TENANT' %} locataire {% elseif type == 'ROLE_REPRESENTATIVE' %} mandataire {% else %} administrateur {% endif %} </a>
+        </div>
+        {% if users is defined and users is not empty %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Prenom</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
                 {% for user in users %}
                     <tr>
-                        <td>
-                            {{ user.name }}
-                        </td>
-                        <td>
-                            {{ user.lastname }}
-                        </td>
-                        <td>
-                            <a href="{{ path('modifyId',{id:user.id}) }}">link</a>
-                        </td>
-                        <td>
-                            <a class="bi bi-dash-circle-fill" href="{{ path('deleteId', {id: user.id})}}"></a>
-                        </td>
+                        <th scope="row">{{ user.id }}</th>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.lastname }}</td>
+                        <td><a class="btn btn-secondary" href="{{ path('modifyId',{id:user.id}) }}">Modifier les informations</a></td>
+{#                        <td>#}
+{#                            <a class="bi bi-dash-circle-fill" href="{{ path('deleteId', {id: user.id})}}"></a>#}
+{#                        </td>#}
                     </tr>
                 {% endfor %}
             </table>
         {% else %}
             <div>
-                il n'existe aucun {{ type }}
+                il n'existe aucun {% if type == 'ROLE_TENANT' %} locataire {% elseif type == 'ROLE_REPRESENTATIVE' %} mandataire {% else %} administrateur {% endif %}
             </div>
         {% endif %}
     </div>

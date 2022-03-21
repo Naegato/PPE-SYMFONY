@@ -4,9 +4,10 @@
 
     --text-primary: #000;
     --text-secondary: #555;
+    --text-light: #fff;
 
     --btn-primary: var(--primary-color);
-    --btn-secondary: #7b993c;
+    /*--btn-secondary: #7b993c;*/
     --btn-third: #555;
 
     --primary-border-color: var(--primary-color);
