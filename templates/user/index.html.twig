@@ -8,33 +8,34 @@
                 {% if app.user.id == user.id %}
                     <h1>{{ user.name }} {{ user.lastname }}</h1>
                     <a href="mailto:{{ user.email }}">{{ user.email }}</a>
-                    <a class="btn btn-primary" href="#">Modifier mon profil</a>
+                    <a class="btn btn-primary" href="{{ path('modifyId',{id: user.id }) }}">Modifier mon profil</a>
                 {% else %}
                     {% include "error/400.html.twig"%}
-{#                    <div>Vous n'avez pas l'autorization d'acceder a ceci</div>#}
                 {% endif %}
             {% elseif app.user.roles[0] == 'ROLE_REPRESENTATIVE' %}
                 {% if user is defined and user is not empty and user.roles[0] != 'ROLE_ADMINISTRATOR' %}
                     <h1>{{ user.name }} {{ user.lastname }}</h1>
                     <a href="mailto:{{ user.email }}">{{ user.email }}</a>
                     {% if app.user.id == user.id %}
-                        <a class="btn btn-primary" href="#">Modifier mon profil</a>
+                        <a class="btn btn-primary" href="{{ path('modifyId',{id: user.id }) }}">Modifier mon profil</a>
                     {% elseif user.roles[0] == "ROLE_TENANT" %}
-                        <a class="btn btn-primary" href="#">Modifier le profil</a>
+                        <a class="btn btn-primary" href="{{ path('modifyId',{id: user.id }) }}">Modifier le profil</a>
                     {% endif %}
                 {% else %}
-                    {% include "../error/400.html.twig"%}
+                    {% include "error/400.html.twig"%}
 {#                    <div>Vous n'avez pas l'autorization d'acceder a ceci</div>#}
                 {% endif %}
             {% else %}
                     <h1>{{ user.name }} {{ user.lastname }}</h1>
                     <a href="mailto:{{ user.email }}">{{ user.email }}</a>
                     {% if app.user.id == user.id %}
-                        <a class="btn btn-primary" href="#">Modifier mon profil</a>
+                        <a class="btn btn-primary" href="{{ path('modifyId',{id: user.id }) }}">Modifier mon profil</a>
                     {% elseif app.user.roles[0] == "ROLE_ADMINISTRATOR" %}
-                        <a class="btn btn-primary" href="#">Modifier le profil</a>
+                        <a class="btn btn-primary" href="{{ path('modifyId',{id: user.id }) }}">Modifier le profil</a>
                     {% endif %}
             {% endif %}
+        {% elseif app.user.roles[0] == "ROLE_TENANT" %}
+            {% include "error/400.html.twig"%}
         {% elseif error is defined and error is not null %}
             {% if error == 'noid' %}
                 <div>Cette url n'essecite un id, exemple : /user/2 </div>

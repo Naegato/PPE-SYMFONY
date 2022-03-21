@@ -1,4 +1,10 @@
 security:
+    role_hierarchy:
+
+        ROLE_TENANT: ROLE_USER
+        ROLE_REPRESENTATIVE: ROLE_USER
+        ROLE_ADMINISTRATOR: ROLE_REPRESENTATIVE
+
     enable_authenticator_manager: true
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
@@ -38,6 +44,8 @@ security:
         - { path: ^/login, role: PUBLIC_ACCESS }
         - { path: ^/reset-password, role: PUBLIC_ACCESS }
         - { path: ^/, role: ROLE_USER }
+        - { path: ^/tenants, role: ROLE_REPRESENTATIVE }
+        - { path: ^/representatives, role: ROLE_ADMINISTRATOR }
 #    access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

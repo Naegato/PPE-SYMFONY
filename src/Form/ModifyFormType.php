@@ -30,17 +30,15 @@ class ModifyFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class)
-            ->add('prenom')
-            ->add('nom')
+            ->add('name')
+            ->add('lastname')
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
+                'required' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
@@ -50,8 +48,8 @@ class ModifyFormType extends AbstractType
                 ],
             ]);
 
-        dump($this->token->getToken()->getUser()->getUserIdentifier());
-        die;
+//        dump($this->token->getToken()->getUser()->getUserIdentifier());
+//        die;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
