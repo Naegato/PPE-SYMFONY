@@ -3,6 +3,7 @@
 @import "_nav.css";
 @import "_footer.css";
 @import "_form.css";
+@import "_list.css";
 
 .index-list {
     list-style: '>' ;

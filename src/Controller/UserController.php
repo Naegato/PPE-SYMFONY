@@ -44,8 +44,7 @@ class UserController extends AbstractController
     {
         if ($this->isGranted('ROLE_ADMINISTRATOR', $this->getUser()->getRoles())) {
 
-            $owners = $this->userRepository
-                ->findUserByRoles('["ROLE_ADMINISTRATOR"]');
+            $owners = $this->userRepository->findUserByRoles('["ROLE_ADMINISTRATOR"]');
 
             return $this->render('user/list.html.twig', [
                 'type' => 'ROLE_ADMINISTRATOR',
@@ -58,8 +57,7 @@ class UserController extends AbstractController
     public function tenants(): Response
     {
         if ($this->isGranted('ROLE_REPRESENTATIVE', $this->getUser()->getRoles())) {
-            $users = $this->userRepository
-            ->findUserByRoles('["ROLE_TENANT"]');
+            $users = $this->userRepository->findUserByRoles('["ROLE_TENANT"]');
 
             return $this->render('user/list.html.twig', [
                 'type' => 'ROLE_TENANT',
