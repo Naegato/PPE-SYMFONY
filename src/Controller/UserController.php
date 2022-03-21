@@ -44,31 +44,38 @@ class UserController extends AbstractController
             ->findUserByRoles('["ROLE_ADMINISTRATOR"]');
 
         return $this->render('user/list.html.twig', [
-            'type' => 'owner',
+            'type' => 'ROLE_ADMINISTRATOR',
             'users' => $owners,
         ]);
     }
     #[Route('/tenants', name: 'tenants')]
     public function tenants(): Response
     {
-        $users = $this->userRepository
+        if ($this->isGranted('ROLE_REPRESENTATIVE', $this->getUser()->getRoles())) {
+            $users = $this->userRepository
             ->findUserByRoles('["ROLE_TENANT"]');
 
-        return $this->render('user/list.html.twig', [
-            'type' => 'tenant',
-            'users' => $users,
-        ]);
+            return $this->render('user/list.html.twig', [
+                'type' => 'ROLE_TENANT',
+                'users' => $users,
+            ]);
+        }
+        return $this->redirectToRoute('index');
+
     }
 
     #[Route('/representatives', name: 'representatives')]
     public function representatives(): Response
     {
-        $users = $this->userRepository ->findUserByRoles('["ROLE_REPRESENTATIVE"]');
+        if ($this->isGranted('ROLE_ADMINISTRATOR', $this->getUser()->getRoles())) {
+            $users = $this->userRepository ->findUserByRoles('["ROLE_REPRESENTATIVE"]');
 
-        return $this->render('user/list.html.twig', [
-            'type' => 'representative',
-            'users' => $users,
-        ]);
+            return $this->render('user/list.html.twig', [
+                'type' => 'ROLE_REPRESENTATIVE',
+                'users' => $users,
+            ]);
+        }
+        return $this->redirectToRoute('index');
     }
 
     #[Route('/modify', name: 'modify')]

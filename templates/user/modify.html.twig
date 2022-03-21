@@ -59,7 +59,7 @@
                 <button type="submit" class="btn">Register</button>
                 {{ form_end(modifyForm) }}
             {% endif %}
-        {% elseif app.user.roles[0] == 'TENANT' %}
+        {% elseif app.user.roles[0] == 'ROLE_TENANT' %}
             {% include 'error/400.html.twig' %}
         {% else %}
             {% include 'error/404.html.twig' %}
