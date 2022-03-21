@@ -1,0 +1,9 @@
+form a.link {
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+form a.link:hover {
+    color: var(--text-secondary);
+    text-decoration: underline;
+}

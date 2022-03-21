@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <div class="container d-flex flex-column mt-5 ms-0 ms-md-5 col-12 col-sm-8 col-md-4 col-xl-2">
+    <div class="container d-flex flex-column mt-5 ms-0 ms-md-5 col-12 col-sm-8 col-md-4 col-xl-3">
         <a href="{{ path('app_register') }}">Ajouter un nouveau {% if type == 'ROLE_TENANT' %} locataire {% elseif type == 'ROLE_REPRESENTATIVE' %} mandataire {% else %} administrateur {% endif %}</a>
         {% if users is defined and users is not null %}
             <table>
