@@ -24,9 +24,7 @@ class UserController extends AbstractController
     #[Route('/user', name: 'user')]
     public function user(): Response
     {
-        return $this->render('user/index.html.twig', [
-            'error' => 'noid',
-        ]);
+        return $this->redirectToRoute('index');
     }
 
     #[Route('/user/{id}', name: 'userId')]
@@ -34,26 +32,32 @@ class UserController extends AbstractController
     {
         $user = $this->userRepository->findUserById($id);
 
-        return $this->render('user/index.html.twig', $user ? ['user' => $user,] : ['error' => 'unexist',] );
+        if ($user) {
+            return $this->render('user/index.html.twig', ['user' => $user,] );
+        }
+
+        return $this->redirectToRoute('index');
     }
 
     #[Route('/owners', name: 'owners')]
     public function owners(): Response
     {
-        $owners = $this->userRepository
-            ->findUserByRoles('["ROLE_ADMINISTRATOR"]');
+        if ($this->isGranted('ROLE_ADMINISTRATOR', $this->getUser()->getRoles())) {
 
-        return $this->render('user/list.html.twig', [
-            'type' => 'ROLE_ADMINISTRATOR',
-            'users' => $owners,
-        ]);
+            $owners = $this->userRepository->findUserByRoles('["ROLE_ADMINISTRATOR"]');
+
+            return $this->render('user/list.html.twig', [
+                'type' => 'ROLE_ADMINISTRATOR',
+                'users' => $owners,
+            ]);
+        }
+        return $this->redirectToRoute('index');
     }
     #[Route('/tenants', name: 'tenants')]
     public function tenants(): Response
     {
         if ($this->isGranted('ROLE_REPRESENTATIVE', $this->getUser()->getRoles())) {
-            $users = $this->userRepository
-            ->findUserByRoles('["ROLE_TENANT"]');
+            $users = $this->userRepository->findUserByRoles('["ROLE_TENANT"]');
 
             return $this->render('user/list.html.twig', [
                 'type' => 'ROLE_TENANT',

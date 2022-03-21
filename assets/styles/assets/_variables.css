@@ -1,12 +1,13 @@
 :root{
-    --primary-color: #9f4900;
+    --primary-color: #9f5540;
     --secondary-color: #000;
 
     --text-primary: #000;
     --text-secondary: #555;
+    --text-light: #fff;
 
     --btn-primary: var(--primary-color);
-    --btn-secondary: #7b993c;
+    /*--btn-secondary: #7b993c;*/
     --btn-third: #555;
 
     --primary-border-color: var(--primary-color);
