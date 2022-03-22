@@ -7,3 +7,25 @@ form a.link:hover {
     color: var(--text-secondary);
     text-decoration: underline;
 }
+
+.form-flex-row > div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-label-display {
+    margin: .2em 0;
+}
+
+.form-label-display > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label-display > div label {
+    font-size: .9em;
+}
+
+.form-label-display > div input {
+    width: 100%;
+}

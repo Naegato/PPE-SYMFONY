@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\ModifyFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,21 +23,54 @@ class UserController extends AbstractController
     }
 
     #[Route('/user', name: 'user')]
-    public function user(): Response
+    public function user(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
-        return $this->redirectToRoute('index');
-    }
+        $id = $request->request->get('id');
 
-    #[Route('/user/{id}', name: 'userId')]
-    public function userId(int $id): Response
-    {
-        $user = $this->userRepository->findUserById($id);
+//        dd($id);
 
-        if ($user) {
-            return $this->render('user/index.html.twig', ['user' => $user,] );
+        if ($id) {
+//            dd("a");
+            $user = $this->userRepository->findUserById($id);
+            $connected = $this->getUser();
+
+            if ($connected->getRoles()[0] == "ROLE_TENANT") {
+                if ($connected->getUserIdentifier() !== $user->getUserIdentifier() ){
+                    return $this->redirectToRoute('index');
+                }
+            }
+
+//            dd($user);
+
+            $form = $this->createForm(ModifyFormType::class, $user);
+//            dd("a");
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+//                dd($form);
+//                dd('submited');
+//                dd($form->get('password')->getData());
+                if ($form->get('password')->getData()) {
+                    $user->setPassword(
+                        $userPasswordHasher->hashPassword(
+                            $user,
+                            $form->get('password')->getData()
+                        )
+                    );
+                }
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('index');
+            }
+
+            return $this->render('user/index.html.twig', [
+                'modifyForm' => $form->createView(),
+                'user' => $user,
+            ]);
+        } else {
+            return $this->redirectToRoute('index');
         }
-
-        return $this->redirectToRoute('index');
     }
 
     #[Route('/owners', name: 'owners')]
@@ -80,50 +114,6 @@ class UserController extends AbstractController
             ]);
         }
         return $this->redirectToRoute('index');
-    }
-
-    #[Route('/modify', name: 'modify')]
-    public function modify(): Response
-    {
-        return $this->render('user/modify.html.twig');
-    }
-
-    #[Route('/modify/{id}', name: 'modifyId')]
-    public function modifyId(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager,int $id): Response
-    {
-        $connected = $this->getUser();
-        $user = $this->userRepository->findUserById($id);
-
-        if ($connected->getRoles()[0] == "ROLE_TENANT") {
-            if ($connected->getUserIdentifier() !== $user->getUserIdentifier() ){
-                throw new \Error("Acces non autoriser");
-            }
-        }
-        $form = $this->createForm(ModifyFormType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $form->get('plainPassword')->getData() ?
-                $user->setPassword(
-                    $userPasswordHasher->hashPassword(
-                        $user,
-                        $form->get('plainPassword')->getData()
-                    )
-                ) :
-            null;
-
-            $entityManager->persist($user);
-            $entityManager->flush();
-            // do anything else you need here, like send an email
-
-            return $this->redirectToRoute('index');
-        }
-
-        return $this->render('user/modify.html.twig', [
-            'modifyForm' => $form->createView(),
-            'user' => $user,
-        ]);
     }
 
     #[Route('/delete/{id}', name: 'deleteId')]

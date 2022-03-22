@@ -14,7 +14,3 @@
     text-decoration: none;
 }
 
-.form-flex-row > div {
-    display: flex;
-    justify-content: space-between;
-}
