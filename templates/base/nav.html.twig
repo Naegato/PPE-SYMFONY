@@ -1,5 +1,5 @@
 {% set route = app.request.attributes.get('_route') %}
-{% set param = app.request.attributes.get('_route_params') %}
+{% set id = app.request.get('id') %}
 
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">
@@ -31,7 +31,9 @@
                 {% endif %}
             </ul>
             {% if app.user %}
-                <a class="nav-link {% if route == 'userId' and param.id == app.user.id %} active {% endif%} bi bi-person-circle" href="/user/{{ app.user.id }}"> Mon profil</a>
+                <form action="{{ path('user') }}" method="post">
+                    <button class="nav-link {% if route == 'user' and id == app.user.id %} active {% endif%} bi bi-person-circle" name="id" value="{{ app.user.id }}"> Mon profil</button>
+                </form>
                 <a class="nav-link bi bi-box-arrow-right" href="/logout"></a>
             {% endif %}
         </div>
