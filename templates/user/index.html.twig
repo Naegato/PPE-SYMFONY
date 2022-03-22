@@ -2,50 +2,36 @@
 
 {% block body %}
 
-    <div class="container d-flex flex-column mt-5 ms-0 ms-md-5 col-12 col-sm-8 col-md-4 col-xl-2">
-        {% if user is defined and user is not empty %}
-            {% if app.user.roles[0] == 'ROLE_TENANT' %}
-                {% if app.user.id == user.id %}
-                    <h1>{{ user.name }} {{ user.lastname }}</h1>
-                    <a href="mailto:{{ user.email }}">{{ user.email }}</a>
-                    <a class="btn btn-primary" href="{{ path('modifyId',{id: user.id }) }}">Modifier mon profil</a>
-                {% else %}
-                    {% include "error/400.html.twig"%}
-                {% endif %}
-            {% elseif app.user.roles[0] == 'ROLE_REPRESENTATIVE' %}
-                {% if user is defined and user is not empty and user.roles[0] != 'ROLE_ADMINISTRATOR' %}
-                    <h1>{{ user.name }} {{ user.lastname }}</h1>
-                    <a href="mailto:{{ user.email }}">{{ user.email }}</a>
-                    {% if app.user.id == user.id %}
-                        <a class="btn btn-primary" href="{{ path('modifyId',{id: user.id }) }}">Modifier mon profil</a>
-                    {% elseif user.roles[0] == "ROLE_TENANT" %}
-                        <a class="btn btn-primary" href="{{ path('modifyId',{id: user.id }) }}">Modifier le profil</a>
-                    {% endif %}
-                {% else %}
-                    {% include "error/400.html.twig"%}
-{#                    <div>Vous n'avez pas l'autorization d'acceder a ceci</div>#}
-                {% endif %}
-            {% else %}
-                    <h1>{{ user.name }} {{ user.lastname }}</h1>
-                    <a href="mailto:{{ user.email }}">{{ user.email }}</a>
-                    {% if app.user.id == user.id %}
-                        <a class="btn btn-primary" href="{{ path('modifyId',{id: user.id }) }}">Modifier mon profil</a>
-                    {% elseif app.user.roles[0] == "ROLE_ADMINISTRATOR" %}
-                        <a class="btn btn-primary" href="{{ path('modifyId',{id: user.id }) }}">Modifier le profil</a>
-                    {% endif %}
-            {% endif %}
-        {% elseif app.user.roles[0] == "ROLE_TENANT" %}
-            {% include "error/400.html.twig"%}
-        {% elseif error is defined and error is not empty %}
-            {% if error == 'noid' %}
-                <div>Cette url n'essecite un id, exemple : /user/2 </div>
-            {% elseif error == 'unexist' %}
-                <div>Cette utilisateur n'existe pas </div>
-            {% else %}
-                <div>{{ error }}</div>
-            {% endif %}
-        {% endif %}
-
+    <div class="container d-flex flex-wrap mt-5">
+        <div class="col-12 col-md-4 mb-4">
+            <h1>{{ user.name }} {{ user.lastname }}</h1>
+            {{ form_start(modifyForm) }}
+            <div class="form-label-display">
+                {{ form_row(modifyForm.lastname, {
+                    'label': 'Nom'
+                }) }}
+            </div>
+            <div class="form-label-display">
+                {{ form_row(modifyForm.name, {
+                    'label': 'Prenom'
+                }) }}
+            </div>
+            <div class="form-label-display">
+                {{ form_row(modifyForm.email) }}
+            </div>
+            <div class="form-label-display">
+                {{ form_row(modifyForm.password, {
+                    'label': 'Mot de passe'
+                }) }}
+            </div>
+            <button type="submit" class="mt-1 btn btn-success" name="id" value="{{ user.id }}">Mettre a jour</button>
+            {{ form_end(modifyForm) }}
+        </div>
+        <div class="col-12 offset-0 offset-md-2 col-md-6">
+            <h1>
+                Mes Locations
+            </h1>
+        </div>
     </div>
 
 {% endblock %}

@@ -4,52 +4,29 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\IsTrue;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ModifyFormType extends AbstractType
 {
-    private TokenStorageInterface $token;
-
-    public function __construct(TokenStorageInterface $token)
-    {
-        $this->token = $token;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('email', EmailType::class)
             ->add('name')
             ->add('lastname')
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'required' => false,
-                'attr' => ['autocomplete' => 'new-password'],
-                'constraints' => [
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
-                ],
-            ]);
-
-//        dump($this->token->getToken()->getUser()->getUserIdentifier());
-//        die;
+            ->add('password', RepeatedType::class, [
+            'type' => PasswordType::class,
+            'invalid_message' => 'Les mots de passe ne sont pas semblables',
+            'options' => ['attr' => ['class' => 'password-field']],
+            'required' => false,
+            'first_options'  => ['label' => 'Mot de passe'],
+            'second_options' => ['label' => 'Confirmer le mot de passe'],
+            'empty_data' => '',
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
