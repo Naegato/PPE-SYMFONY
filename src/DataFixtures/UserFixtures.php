@@ -9,7 +9,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture
 {
-
     private UserPasswordHasherInterface $hasher;
 
     public function __construct(UserPasswordHasherInterface $hasher)
@@ -54,5 +53,8 @@ class UserFixtures extends Fixture
          $manager->persist($user3);
 
          $manager->flush();
+
+        $this->addReference("admin", $user);
+        $this->addReference("representative", $user3);
     }
 }

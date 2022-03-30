@@ -19,11 +19,11 @@
             <div class="form-label-display">
                 {{ form_row(modifyForm.email) }}
             </div>
-            <div class="form-label-display">
-                {{ form_row(modifyForm.password, {
-                    'label': 'Mot de passe'
-                }) }}
-            </div>
+{#            <div class="form-label-display">#}
+{#                {{ form_row(modifyForm.password, {#}
+{#                    'label': 'Mot de passe'#}
+{#                }) }}#}
+{#            </div>#}
             <button type="submit" class="mt-1 btn btn-success" name="id" value="{{ user.id }}">Mettre a jour</button>
             {{ form_end(modifyForm) }}
         </div>

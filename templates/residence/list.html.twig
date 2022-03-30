@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% set biens = [1,2,3] %}
+
+{% block body %}
+
+    {% if biens is defined and biens is not empty %}
+        <div class="">
+            <div class="d-flex">
+                <h1>{{ biens|length }} Biens</h1>
+            </div>
+        </div>
+    {% else %}
+
+        <div>Problème survenue</div>
+
+    {% endif %}
+{% endblock %}
