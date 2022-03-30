@@ -1,0 +1,10 @@
+<tr>
+    <th scope="row">{{ user.id }}</th>
+    <td>{{ user.name }}</td>
+    <td>{{ user.lastname }}</td>
+    <td>
+        <form method="post" action="{{ path('user') }}">
+            <button class="btn btn-secondary" name="id" value="{{ user.id }}">Modifier les informations</button>
+        </form>
+    </td>
+</tr>

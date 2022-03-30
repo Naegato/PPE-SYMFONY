@@ -2,17 +2,28 @@
 
 namespace App\Controller;
 
+use App\Repository\ResidenceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ResidenceController extends AbstractController
 {
-    #[Route('/residence', name: 'residence')]
-    public function index(): Response
+    private ResidenceRepository $residenceRepository;
+
+    public function __construct(ResidenceRepository $residenceRepository)
     {
-        return $this->render('residence/index.html.twig', [
-            'controller_name' => 'ResidenceController',
+        $this->residenceRepository = $residenceRepository;
+    }
+
+    #[Route('/biens', name: 'biens')]
+    public function biens(): Response
+    {
+//        dd($this->residenceRepository->findAllCity());
+        $residence = $this->residenceRepository->findAll();
+
+        return $this->render('residence/list.html.twig', [
+            'biens' => $residence,
         ]);
     }
 }

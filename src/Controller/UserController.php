@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\ModifyFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use mysql_xdevapi\Exception;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,37 +27,37 @@ class UserController extends AbstractController
     public function user(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         $id = $request->request->get('id');
-
 //        dd($id);
-
         if ($id) {
 //            dd("a");
             $user = $this->userRepository->findUserById($id);
             $connected = $this->getUser();
-
             if ($connected->getRoles()[0] == "ROLE_TENANT") {
                 if ($connected->getUserIdentifier() !== $user->getUserIdentifier() ){
                     return $this->redirectToRoute('index');
                 }
             }
-
 //            dd($user);
-
             $form = $this->createForm(ModifyFormType::class, $user);
 //            dd("a");
+//            dd($form);
             $form->handleRequest($request);
-
+//            dd($form->get('password')->getData());
+//            dd($request,$form);
+//            dd('a');
             if ($form->isSubmitted() && $form->isValid()) {
-//                dd($form);
 //                dd('submited');
-//                dd($form->get('password')->getData());
-                if ($form->get('password')->getData()) {
-                    $user->setPassword(
-                        $userPasswordHasher->hashPassword(
-                            $user,
-                            $form->get('password')->getData()
-                        )
-                    );
+                try {
+                    if ($form->get('password')->getData()) {
+                        $user->setPassword(
+                            $userPasswordHasher->hashPassword(
+                                $user,
+                                $form->get('password')->getData()
+                            )
+                        );
+                    }
+                } catch (\Exception) {
+
                 }
                 $entityManager->persist($user);
                 $entityManager->flush();

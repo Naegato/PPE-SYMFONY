@@ -19,21 +19,7 @@
                     </tr>
                 </thead>
                 {% for user in users %}
-                    <tr>
-                        <th scope="row">{{ user.id }}</th>
-                        <td>{{ user.name }}</td>
-                        <td>{{ user.lastname }}</td>
-{#                        <td><a class="btn btn-secondary" href="{{ path('user',{id:user.id}) }}">Modifier les informations</a></td>#}
-                        <td>
-                            <form method="post" action="{{ path('user') }}">
-                                <button class="btn btn-secondary" name="id" value="{{ user.id }}">Modifier les informations</button>
-                            </form>
-{#                            <a class="btn btn-secondary" href="{{ path('user',{id:user.id}) }}">Modifier les informations</a>#}
-                        </td>
-{#                        <td>#}
-{#                            <a class="bi bi-dash-circle-fill" href="{{ path('deleteId', {id: user.id})}}"></a>#}
-{#                        </td>#}
-                    </tr>
+                    {% include 'user/user-line.html.twig' with {'user' : user} %}
                 {% endfor %}
             </table>
         {% else %}
