@@ -45,6 +45,13 @@ class ResidenceRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllCity() {
+        return $this
+            ->select('city')
+            ->from('residence', 'city')
+            ->groupBy('city');
+    }
+
     // /**
     //  * @return Residence[] Returns an array of Residence objects
     //  */

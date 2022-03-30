@@ -16,6 +16,9 @@ class UserFixtures extends Fixture
         $this->hasher = $hasher;
     }
 
+    public const ADMIN = "admin";
+    public const REPRESENTATIVE = "representative";
+    public const TENANT = "tenant";
 
     public function load(ObjectManager $manager): void
     {
@@ -52,9 +55,11 @@ class UserFixtures extends Fixture
          $user3->setPassword($password3);
          $manager->persist($user3);
 
+         $this->addReference(self::ADMIN, $user);
+         $this->addReference(self::TENANT, $user2);
+         $this->addReference(self::REPRESENTATIVE, $user3);
+
          $manager->flush();
 
-        $this->addReference("admin", $user);
-        $this->addReference("representative", $user3);
     }
 }
