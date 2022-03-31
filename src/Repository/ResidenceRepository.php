@@ -46,10 +46,38 @@ class ResidenceRepository extends ServiceEntityRepository
     }
 
     public function findAllCity() {
-        return $this
-            ->select('city')
-            ->from('residence', 'city')
-            ->groupBy('city');
+
+        $temp = $this->createQueryBuilder('Residence')
+            ->select('r.city')
+            ->from('App\Entity\Residence', 'r')
+            ->groupBy('r.city')
+            ->getQuery()
+            ->getResult();
+        $city = [];
+        foreach ($temp as $row) {
+            $city[] = $row['city'];
+        }
+        return $city;
+    }
+
+    public function findByCity(string $city) {
+
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.city = :val')
+            ->setParameter('val', $city)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllocatedByCity() {
+        //
+        //
+        //
+        //      ICI
+        //
+        //
+        //
+        //
     }
 
     // /**
