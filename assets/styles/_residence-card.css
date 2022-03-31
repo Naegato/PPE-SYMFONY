@@ -1,0 +1,19 @@
+.residence-card {
+    height: 200px;
+}
+
+.residence-card > div h1{
+    text-transform: capitalize;
+    color: var(--primary-color);
+}
+
+.residence-card > div h6 {
+    font-size: .7em;
+    font-weight: bold;
+}
+
+.residence-card img {
+    height: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+}

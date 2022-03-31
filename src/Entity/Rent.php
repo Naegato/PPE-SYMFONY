@@ -18,8 +18,7 @@ class Rent
     private $tenant;
 
 
-
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'text')]
     private $inventory_file;
 
     #[ORM\Column(type: 'datetime')]
@@ -43,7 +42,7 @@ class Rent
     #[ORM\Column(type: 'datetime')]
     private $representative_validated_at;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: 'datetime')]
     private $tenant_validated_at;
 
     #[ORM\ManyToOne(targetEntity: residence::class)]
@@ -67,12 +66,12 @@ class Rent
         return $this;
     }
 
-    public function getResidence(): ?user
+    public function getResidence(): ?Residence
     {
         return $this->residence;
     }
 
-    public function setResidence(?user $residence): self
+    public function setResidence(?Residence $residence): self
     {
         $this->residence = $residence;
 
@@ -139,12 +138,12 @@ class Rent
         return $this;
     }
 
-    public function getTenantValidatedAt(): ?string
+    public function getTenantValidatedAt(): ?\DateTimeInterface
     {
         return $this->tenant_validated_at;
     }
 
-    public function setTenantValidatedAt(string $tenant_validated_at): self
+    public function setTenantValidatedAt(\DateTimeInterface $tenant_validated_at): self
     {
         $this->tenant_validated_at = $tenant_validated_at;
 
