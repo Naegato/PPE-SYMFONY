@@ -60,6 +60,14 @@ class ResidenceRepository extends ServiceEntityRepository
         return $city;
     }
 
+    public function findById($id) {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function findByCity(string $city) {
 
         return $this->createQueryBuilder('r')

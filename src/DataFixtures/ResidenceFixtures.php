@@ -23,7 +23,7 @@ class ResidenceFixtures extends Fixture implements DependentFixtureInterface
             $residence = new Residence();
 
             $a = file_get_contents("https://picsum.photos/300");
-            $b = base64_encode($a);
+            $b = "data:image/png;base64, ".base64_encode($a);
 
             $residence->setImage($b);
             $residence->setCity($city[array_rand($city)]);

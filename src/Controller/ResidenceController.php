@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Residence;
 use App\Repository\ResidenceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,5 +36,21 @@ class ResidenceController extends AbstractController
             'cities' => $cities,
             'selectedCity' => $selectedCity,
         ]);
+    }
+
+    #[Route('/bien', name: 'bien')]
+    public function bien(Request $request): Response
+    {
+        $id = $request->request->get("id");
+
+        if (!$id) {
+            return $this->redirectToRoute('biens');
+        }
+
+        $residence = $this->residenceRepository->findById($id);
+
+        return $this->render('residence/index.html.twig', [
+                "residence" => $residence,
+            ]);
     }
 }

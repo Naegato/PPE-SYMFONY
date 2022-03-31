@@ -1,9 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="m-5">
-        {% if residence is defined and residence not empty %}
 
+    <div class="container d-flex flex-wrap m-5">
+        {% if residence is defined and residence is not empty %}
+            <div class="col-12 col-md-4 mb-4">
+                <img src="{{ residence.image }}">            
+            </div>
+            <div class="col-12 offset-0 offset-md-2 col-md-6">
+                <h1>
+                    Mes Locations
+                </h1>
+            </div>
         {% else %}
 
             Un problème est survenue

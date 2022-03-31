@@ -1,5 +1,5 @@
 <div class="mb-3 d-flex residence-card">
-    <img src="data:image/png;base64, {{ residence.image }}">
+    <img src="{{ residence.image }}">
     <div class="ms-3">
         <h1>
             {{ residence.name }}
@@ -10,6 +10,9 @@
             <p class="ms-5">Gérée par {{ residence.representative.name }}</p>
         </div>
         <p>? locations au total</p>
-        <a href="#" class="btn btn-custom">Acceder</a>
+        <form method="post" action="{{ path('bien') }}">
+            <button class="btn btn-custom" name="id" value="{{ residence.id }}">Acceder</button>
+        </form>
+{#        <a href="{{ path('bien', {"residence" : residence.id}) }}" class="btn btn-custom">Acceder</a>#}
     </div>
 </div>
