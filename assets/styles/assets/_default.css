@@ -1,0 +1,14 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-custom {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+}
+
+.color-custom-primary {
+    color: var(--primary-color);
+}

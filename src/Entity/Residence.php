@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ResidenceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\User;
 
 #[ORM\Entity(repositoryClass: ResidenceRepository::class)]
 class Residence
@@ -31,20 +32,23 @@ class Residence
     #[ORM\Column(type: 'string', length: 255)]
     private $inventory_file;
 
-    #[ORM\ManyToOne(targetEntity: user::class)]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
     private $owner;
 
-    #[ORM\ManyToOne(targetEntity: user::class)]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
     private $representative;
 
-    public function getId(): ?int
+    #[ORM\Column(type: 'text')]
+    private $image;
+
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -56,7 +60,7 @@ class Residence
         return $this;
     }
 
-    public function getAddress(): ?string
+    public function getAddress(): string
     {
         return $this->address;
     }
@@ -68,7 +72,7 @@ class Residence
         return $this;
     }
 
-    public function getCity(): ?string
+    public function getCity(): string
     {
         return $this->city;
     }
@@ -80,7 +84,7 @@ class Residence
         return $this;
     }
 
-    public function getZipCode(): ?string
+    public function getZipCode(): string
     {
         return $this->zip_code;
     }
@@ -92,7 +96,7 @@ class Residence
         return $this;
     }
 
-    public function getCountry(): ?string
+    public function getCountry(): string
     {
         return $this->country;
     }
@@ -121,21 +125,33 @@ class Residence
         return $this->owner;
     }
 
-    public function setOwner(?user $owner): self
+    public function setOwner(User $owner): self
     {
         $this->owner = $owner;
 
         return $this;
     }
 
-    public function getRepresentative(): ?user
+    public function getRepresentative(): User
     {
         return $this->representative;
     }
 
-    public function setRepresentative(?user $representative): self
+    public function setRepresentative(User $representative): self
     {
         $this->representative = $representative;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

@@ -2,17 +2,17 @@
 
 {% block body %}
 
-    {% if biens is defined and biens is not empty %}
+    {% if biens is defined and biens is not empty and cities is defined and cities is not empty  %}
         <div class="m-5">
-            <div class="d-flex align-items-center">
-                <h1>{{ biens|length }} Biens</h1>
-                <form class="ms-5 d-flex gap-3 align-items-center">
+            <div class="mb-5 d-flex align-items-center">
+                <h1 class="color-custom-primary">{{ biens|length }} Biens</h1>
+                <form class="ms-5 d-flex gap-3 align-items-center" method="post">
                     <label for="select">Ville</label>
-                    <select class="form-select" id="select">
-                        <option selected>Toutes</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select class="form-select" id="select" name="selectedCity">
+                        <option {% if selectedCity is not defined or selectedCity is empty  %} selected {% endif %} value="{{ null }}">Toutes</option>
+                        {% for city in cities %}
+                            <option {% if selectedCity is defined and selectedCity is not empty and selectedCity == city %} selected {% endif %} value="{{ city }}">{{ city }}</option>
+                        {% endfor %}
                     </select>
                     <div class="form-check form-switch d-flex flex-fill align-items-center gap-3">
                         <input class="form-check-input flex-fill" type="checkbox" role="switch" id="flexSwitch">
@@ -22,11 +22,9 @@
                 </form>
                 <a class="ms-3 btn btn-success" href="#">Ajouter un bien</a>
             </div>
-            <div class="container-fluid">
+            <div class="container">
                 {% for bien in biens %}
-
-
-
+                    {% include 'residence/residence-card.html.twig' with {'residence' : bien} %}
                 {% endfor %}
             </div>
         </div>

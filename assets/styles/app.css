@@ -1,9 +1,11 @@
 @import "assets/_variables.css";
+@import "assets/_default.css";
 @import "_table.css";
 @import "_nav.css";
 @import "_footer.css";
 @import "_form.css";
 @import "_list.css";
+@import "_residence-card.css";
 
 .index-list {
     list-style: '>' ;

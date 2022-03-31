@@ -14,14 +14,18 @@ class ResidenceFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $city = ["Paris","Creil","Senlis"];
-        /** @var User $owner */
-        $owner = $this->getReference(UserFixtures::ADMIN);
         /** @var User $representative */
         $representative = $this->getReference(UserFixtures::REPRESENTATIVE);
+        /** @var User $owner */
+        $owner = $this->getReference(UserFixtures::ADMIN);
 
         for ($i = 0 ; $i < 10 ; $i++) {
             $residence = new Residence();
 
+            $a = file_get_contents("https://picsum.photos/300");
+            $b = base64_encode($a);
+
+            $residence->setImage($b);
             $residence->setCity($city[array_rand($city)]);
             $residence->setAddress('1 rue de la paix');
             $residence->setCountry("france");
@@ -30,8 +34,8 @@ class ResidenceFixtures extends Fixture implements DependentFixtureInterface
             $residence->setRepresentative($representative);
             $residence->setZipCode("60???");
             $residence->setInventoryFile('?');
-
             $manager->persist($residence);
+            $this->addReference("residence$i", $residence);
         }
 
         $manager->flush();
