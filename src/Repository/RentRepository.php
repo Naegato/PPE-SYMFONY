@@ -45,6 +45,22 @@ class RentRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllRentByResidence($residence) {
+        $temp = $this->createQueryBuilder('r')
+            ->andWhere('r.residence = :residence')
+            ->setParameter('residence', $residence)
+            ->getQuery()
+            ->getResult();
+//        dd($temp);
+        $rent = [];
+        foreach ($temp as $row) {
+//            dd($row);
+            $rent[] = $row;
+        }
+//        dd($rent);
+        return $rent;
+    }
+
     // /**
     //  * @return Rent[] Returns an array of Rent objects
     //  */

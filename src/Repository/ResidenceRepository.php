@@ -77,15 +77,23 @@ class ResidenceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findAllocatedByCity() {
-        //
-        //
-        //
-        //      ICI
-        //
-        //
-        //
-        //
+    public function findAllocatedByCity(string $city) {
+        $city = "%$city%";
+        $entityManager = $this->getEntityManager();
+        $now_date = new \DateTime('now');
+        $query = $entityManager->createQuery(
+            "SELECT residence
+             FROM App\Entity\Residence residence, App\Entity\Rent rent
+             WHERE residence.city
+             LIKE :city
+             AND residence.id = rent.residence
+             AND rent.arrival_date < :now
+             AND rent.departure_date > :now"
+        )->setParameter('now', $now_date)
+            ->setParameter('city', $city);
+
+        // returns an array of Product objects
+        return $query->getResult();
     }
 
     // /**

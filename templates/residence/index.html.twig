@@ -5,17 +5,88 @@
     <div class="container d-flex flex-wrap m-5">
         {% if residence is defined and residence is not empty %}
             <div class="col-12 col-md-4 mb-4">
-                <img src="{{ residence.image }}">            
+                <img src="{{ residence.image }}">
+                {{ form_start(modifyForm) }}
+                <div class="form-label-display">
+                    {{ form_row(modifyForm.name, {
+                        'label': 'Nom de la residence'
+                    }) }}
+                </div>
+                <div class="form-label-display">
+                    {{ form_row(modifyForm.address, {
+                        'label': 'Adresse'
+                    }) }}
+                </div>
+                <div class="d-flex col-12 justify-content-between">
+                    <div class="form-label-display">
+                        {{ form_row(modifyForm.zip_code, {
+                            'label': 'Code postal'
+                        }) }}
+                    </div>
+                    <div class="form-label-display">
+                        {{ form_row(modifyForm.city, {
+                            'label': 'Ville'
+                        }) }}
+                    </div>
+                </div>
+
+                <div class="form-label-display">
+                    {{ form_row(modifyForm.country, {
+                        'label': 'Pays'
+                    }) }}
+                </div>
+{#                <div class="form-label-display">#}
+{#                    {{ form_row(modifyForm.inventory_file, {#}
+{#                        'label': 'Gabarit inventaire'#}
+{#                    }) }}#}
+{#                </div>#}
+{#                <div class="form-label-display">#}
+{#                    {{ form_row(modifyForm.image, {#}
+{#                        'label': 'Photo'#}
+{#                    }) }}#}
+{#                </div>#}
+
+                <button type="submit" name="id" value="{{ residence.id }}">Mettre a jour les données</button>
+                {{ form_end(modifyForm) }}
             </div>
             <div class="col-12 offset-0 offset-md-2 col-md-6">
-                <h1>
-                    Mes Locations
+                <h1 class="color-custom-primary">
+                    {{ residence.name }}
                 </h1>
+                <div class="d-flex">
+                    <button class="btn btn-secondary" disabled>
+                        {% if dispo is defined and dispo is not empty and dispo == true %}
+                            Disponible à la location
+                        {% else %}
+                            Indisponible
+                        {% endif %}
+                    </button>
+
+                    <button class="ms-5 btn btn-success">
+                        Ajouter une location
+                    </button>
+                </div>
+
+                <h2 class="mt-5">{{ rents|length }} <span class="color-custom-primary">Locations</span></h2>
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Date entrée</th>
+                        <th scope="col">Date sortie</th>
+                        <th scope="col">Locataire</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    {% for rent in rents %}
+                        {% include 'residence/residence-line.html.twig' with {'rent' : rent} %}
+                    {% endfor %}
+                </table>
             </div>
         {% else %}
-
             Un problème est survenue
-
         {% endif %}
     </div>
+
 {% endblock %}

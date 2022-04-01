@@ -5,8 +5,8 @@
 {#    <div class="container d-flex flex-column mt-5 ms-0 ms-md-5 col-12 col-sm-8 col-md-4 col-xl-3">#}
     <div class="container d-flex flex-column mt-5 ms-0 ms-md-5 offset-0 col col-md-6 offset-md-2">
         <div class="d-flex align-items-center justify-content-between title-list" >
-            <h2>Gestion des {% if type == 'ROLE_TENANT' %} locataires {% elseif type == 'ROLE_REPRESENTATIVE' %} mandataires {% else %} administrateurs {% endif %}</h2>
-            <a class="btn btn-success" href="{{ path('app_register') }}">Nouveau {% if type == 'ROLE_TENANT' %} locataire {% elseif type == 'ROLE_REPRESENTATIVE' %} mandataire {% else %} administrateur {% endif %} </a>
+            <h2>Gestion des {% if type == 'TENANT' %} locataires {% elseif type == 'REPRESENTATIVE' %} mandataires {% else %} administrateurs {% endif %}</h2>
+            <a class="btn btn-success" href="{{ path('app_register') }}">Nouveau {% if type == 'TENANT' %} locataire {% elseif type == 'REPRESENTATIVE' %} mandataire {% else %} administrateur {% endif %} </a>
         </div>
         {% if users is defined and users is not empty %}
             <table class="table">
@@ -18,13 +18,34 @@
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
-                {% for user in users %}
+                {% for user in users[page-1] %}
                     {% include 'user/user-line.html.twig' with {'user' : user} %}
                 {% endfor %}
             </table>
+            <div class="user-navigation">
+                {% if page != 1 %}
+                    <a href="{{ path('usersRolesPage', {'roles' : type, 'page' : page-1}) }}">Précedent</a>
+                {% endif %}
+                <a {% if page == 1%} class="active" {% endif%} href="{{ path('usersRolesPage', {'roles' : type, 'page' : 1}) }}">1</a>
+                {% if page-2 > 2 %}
+                    <a>...</a>
+                {% endif %}
+                {% for i in page-2..page+2 %}
+                    {% if i > 1 and i < users|length %}
+                        <a {% if page == i%} class="active" {% endif%} href="{{ path('usersRolesPage', {'roles' : type, 'page' : i}) }}">{{ i }}</a>
+                    {% endif %}
+                {% endfor %}
+                {% if page+2 < users|length-2 %}
+                    <a>...</a>
+                {% endif %}
+                <a {% if page == users|length %} class="active" {% endif%} href="{{ path('usersRolesPage', {'roles' : type, 'page' : users|length}) }}">{{ users|length }}</a>
+                {% if page != users|length %}
+                    <a href="{{ path('usersRolesPage', {'roles' : type, 'page' : page+1}) }}">Suivant</a>
+                {% endif %}
+            </div>
         {% else %}
             <div>
-                il n'existe aucun {% if type == 'ROLE_TENANT' %} locataire {% elseif type == 'ROLE_REPRESENTATIVE' %} mandataire {% else %} administrateur {% endif %}
+                il n'existe aucun {% if type == 'TENANT' %} locataire {% elseif type == 'REPRESENTATIVE' %} mandataire {% else %} administrateur {% endif %}
             </div>
         {% endif %}
     </div>

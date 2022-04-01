@@ -16,7 +16,7 @@ class RentFixtures extends Fixture implements DependentFixtureInterface
         /** @var User $tenant */
         $tenant = $this->getReference(UserFixtures::TENANT);
 
-        for ($i = 0; $i < 2; $i++) {
+        for ($i = 0; $i < 4; $i++) {
             $rent = new Rent();
 
 //            dd($date);

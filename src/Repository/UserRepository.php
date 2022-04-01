@@ -62,13 +62,38 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
-    public function findUserByRoles($roles)
-    {
+    public function findUserByRolesCount($roles) {
+        return $this->createQueryBuilder('u')
+        ->select('count(u.id)')
+        ->andWhere('u.roles = :val')
+        ->setParameter('val', $roles)
+        ->getQuery()
+        ->getSingleScalarResult();
+    }
+
+    public function findUserByRoles($roles) {
         return $this->createQueryBuilder('u')
             ->andWhere('u.roles = :val')
             ->setParameter('val', $roles)
             ->getQuery()
             ->getResult();
+    }
+
+    public function pageFindUserByRoles($roles)
+    {
+        $count = $this->findUserByRolesCount($roles);
+        $users = [];
+        for ($offset = 0; $offset < $count; $offset+=3){
+            $users[] = $this->createQueryBuilder('u')
+                ->andWhere('u.roles = :roles')
+                ->setFirstResult($offset)
+                ->setMaxResults(3)
+                ->setParameter('roles',$roles)
+                ->getQuery()
+                ->getResult();
+        }
+
+        return $users;
     }
 
     public function findUserById($id)

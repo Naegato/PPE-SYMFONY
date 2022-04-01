@@ -20,11 +20,11 @@
                     </li>
                     {% if app.user.roles[0] != 'ROLE_TENANT' %}
                         <li class="nav-item">
-                            <a class="nav-link {% if route == 'tenants' %}active{% endif %}" href="{{ path('tenants') }}">Locataire</a>
+                            <a class="nav-link {% if route == 'tenants' %}active{% endif %}" href="{{ path('usersRoles',{"roles":'tenant'}) }}">Locataire</a>
                         </li>
                         {% if app.user.roles[0] == 'ROLE_ADMINISTRATOR' %}
                             <li class="nav-item">
-                                <a class="nav-link {% if route == 'representatives' %}active{% endif %}" href="{{ path('representatives') }}">Mandataire</a>
+                                <a class="nav-link {% if route == 'representatives' %}active{% endif %}" href="{{ path('usersRoles',{"roles":'representative'}) }}">Mandataire</a>
                             </li>
                         {% endif %}
                     {% endif %}

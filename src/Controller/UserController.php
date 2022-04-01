@@ -29,24 +29,18 @@ class UserController extends AbstractController
         $id = $request->request->get('id');
 //        dd($id);
         if ($id) {
-//            dd("a");
             $user = $this->userRepository->findUserById($id);
             $connected = $this->getUser();
             if ($connected->getRoles()[0] == "ROLE_TENANT") {
-                if ($connected->getUserIdentifier() !== $user->getUserIdentifier() ){
+                if ($connected->getUserIdentifier() !== $user->getUserIdentifier()){
                     return $this->redirectToRoute('index');
                 }
             }
-//            dd($user);
             $form = $this->createForm(ModifyFormType::class, $user);
-//            dd("a");
-//            dd($form);
+
             $form->handleRequest($request);
-//            dd($form->get('password')->getData());
-//            dd($request,$form);
-//            dd('a');
+
             if ($form->isSubmitted() && $form->isValid()) {
-//                dd('submited');
                 try {
                     if ($form->get('password')->getData()) {
                         $user->setPassword(
@@ -74,48 +68,87 @@ class UserController extends AbstractController
         }
     }
 
-    #[Route('/owners', name: 'owners')]
-    public function owners(): Response
+    #[Route('/users', name: 'users')]
+    public function users(): Response
     {
-        if ($this->isGranted('ROLE_ADMINISTRATOR', $this->getUser()->getRoles())) {
-
-            $owners = $this->userRepository->findUserByRoles('["ROLE_ADMINISTRATOR"]');
-
-            return $this->render('user/list.html.twig', [
-                'type' => 'ROLE_ADMINISTRATOR',
-                'users' => $owners,
-            ]);
-        }
         return $this->redirectToRoute('index');
     }
-    #[Route('/tenants', name: 'tenants')]
-    public function tenants(): Response
+
+    #[Route('/users/{roles}/{page}', name: 'usersRolesPage')]
+    public function usersRolesPage(string $roles, int $page = 1): Response
     {
-        if ($this->isGranted('ROLE_REPRESENTATIVE', $this->getUser()->getRoles())) {
-            $users = $this->userRepository->findUserByRoles('["ROLE_TENANT"]');
-
-            return $this->render('user/list.html.twig', [
-                'type' => 'ROLE_TENANT',
-                'users' => $users,
-            ]);
+        $roles = strtoupper($roles);
+        if ($roles != 'TENANT') {
+            if (!$this->isGranted("ROLE_$roles", $this->getUser()->getRoles())) {
+                return $this->redirectToRoute('index');
+            }
         }
-        return $this->redirectToRoute('index');
+        $count = $this->userRepository->findUserByRolesCount('["ROLE_'.$roles.'"]');
+        $users = $this->userRepository->pageFindUserByRoles('["ROLE_'.$roles.'"]');
 
+        if ($page > count($users)){
+            return $this->redirectToRoute('usersRolesPage', ['roles' => $roles, 'page' => count($users)]);
+        }
+
+        if ($page < 1){
+            return $this->redirectToRoute('usersRolesPage', ['roles' => $roles, 'page' => 1]);
+        }
+
+        return $this->render('user/list.html.twig', [
+            'type' => "$roles",
+            'users' => $users,
+            'page' => $page
+        ]);
     }
 
-    #[Route('/representatives', name: 'representatives')]
-    public function representatives(): Response
+    #[Route('/users/{roles}/', name: 'usersRoles')]
+    public function usersRoles(string $roles): Response
     {
-        if ($this->isGranted('ROLE_ADMINISTRATOR', $this->getUser()->getRoles())) {
-            $users = $this->userRepository ->findUserByRoles('["ROLE_REPRESENTATIVE"]');
-
-            return $this->render('user/list.html.twig', [
-                'type' => 'ROLE_REPRESENTATIVE',
-                'users' => $users,
-            ]);
-        }
-        return $this->redirectToRoute('index');
+        return $this->redirectToRoute('usersRolesPage', ['roles' => $roles, 'page' => 1]);
     }
+
+//    #[Route('/owners', name: 'owners')]
+//    public function owners(): Response
+//    {
+//        if ($this->isGranted('ROLE_ADMINISTRATOR', $this->getUser()->getRoles())) {
+//
+//            $owners = $this->userRepository->findUserByRoles('["ROLE_ADMINISTRATOR"]');
+//
+//            return $this->render('user/list.html.twig', [
+//                'type' => 'ROLE_ADMINISTRATOR',
+//                'users' => $owners,
+//            ]);
+//        }
+//        return $this->redirectToRoute('index');
+//    }
+//    #[Route('/tenants', name: 'tenants')]
+//    public function tenants(): Response
+//    {
+//        if ($this->isGranted('ROLE_REPRESENTATIVE', $this->getUser()->getRoles())) {
+//            $users = $this->userRepository->findUserByRoles('["ROLE_TENANT"]');
+//
+//            return $this->render('user/list.html.twig', [
+//                'type' => 'ROLE_TENANT',
+//                'users' => $users,
+//            ]);
+//        }
+//        return $this->redirectToRoute('index');
+//
+//    }
+//
+//    #[Route('/representatives', name: 'representatives')]
+//    public function representatives(): Response
+//    {
+//        if ($this->isGranted('ROLE_ADMINISTRATOR', $this->getUser()->getRoles())) {
+//            $users = $this->userRepository ->findUserByRoles('["ROLE_REPRESENTATIVE"]');
+//
+//            return $this->render('user/list.html.twig', [
+//                'type' => 'ROLE_REPRESENTATIVE',
+//                'users' => $users,
+//            ]);
+//        }
+//        return $this->redirectToRoute('index');
+//    }
 
     #[Route('/delete/{id}', name: 'deleteId')]
     public function deleteId(int $id): Response
