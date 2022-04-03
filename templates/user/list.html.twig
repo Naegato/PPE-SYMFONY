@@ -2,7 +2,6 @@
 
 {% block body %}
 
-{#    <div class="container d-flex flex-column mt-5 ms-0 ms-md-5 col-12 col-sm-8 col-md-4 col-xl-3">#}
     <div class="container d-flex flex-column mt-5 ms-0 ms-md-5 offset-0 col col-md-6 offset-md-2">
         <div class="d-flex align-items-center justify-content-between title-list" >
             <h2>Gestion des {% if type == 'TENANT' %} locataires {% elseif type == 'REPRESENTATIVE' %} mandataires {% else %} administrateurs {% endif %}</h2>
@@ -22,25 +21,37 @@
                     {% include 'user/user-line.html.twig' with {'user' : user} %}
                 {% endfor %}
             </table>
-            <div class="user-navigation">
-                {% if page != 1 %}
-                    <a href="{{ path('usersRolesPage', {'roles' : type, 'page' : page-1}) }}">Précedent</a>
-                {% endif %}
-                <a {% if page == 1%} class="active" {% endif%} href="{{ path('usersRolesPage', {'roles' : type, 'page' : 1}) }}">1</a>
-                {% if page-2 > 2 %}
-                    <a>...</a>
-                {% endif %}
-                {% for i in page-2..page+2 %}
-                    {% if i > 1 and i < users|length %}
-                        <a {% if page == i%} class="active" {% endif%} href="{{ path('usersRolesPage', {'roles' : type, 'page' : i}) }}">{{ i }}</a>
-                    {% endif %}
-                {% endfor %}
-                {% if page+2 < users|length-2 %}
-                    <a>...</a>
-                {% endif %}
-                <a {% if page == users|length %} class="active" {% endif%} href="{{ path('usersRolesPage', {'roles' : type, 'page' : users|length}) }}">{{ users|length }}</a>
-                {% if page != users|length %}
-                    <a href="{{ path('usersRolesPage', {'roles' : type, 'page' : page+1}) }}">Suivant</a>
+            <div class="user-navigation col-12 d-flex justify-content-evenly">
+                {% if users|length != 1 %}
+                    <div class="d-flex col-3 justify-content-evenly">
+{#                        {% if page != 1 %}#}
+                            <a class="static" href="{{ path('usersRolesPage', {'roles' : type, 'page' : page-1}) }}">Précedent</a>
+{#                        {% endif %}#}
+                        <a class="static {% if page == 1%} active {% endif%}" href="{{ path('usersRolesPage', {'roles' : type, 'page' : 1}) }}">1</a>
+                    </div>
+                    <div class="d-flex col-6 justify-content-evenly">
+                        {% if page-2 > 2 %}
+                            <a>...</a>
+                        {% endif %}
+                        {% for i in page-2..page+2 %}
+                            {% if i > 1 and i < users|length %}
+                                <a {% if page == i%} class="active" {% endif%} href="{{ path('usersRolesPage', {'roles' : type, 'page' : i}) }}">{{ i }}</a>
+                            {% endif %}
+                        {% endfor %}
+                        {% if page+2 < users|length-2 %}
+                            <a>...</a>
+                        {% endif %}
+                    </div>
+                    <div class="d-flex col-3 justify-content-evenly">
+                        {% if users|length != 1 %}
+                            <a class="static {% if page == users|length %} active {% endif %}" href="{{ path('usersRolesPage', {'roles' : type, 'page' : users|length}) }}">{{ users|length }}</a>
+    {#                        {% if page != users|length %}#}
+                                <a class="static" href="{{ path('usersRolesPage', {'roles' : type, 'page' : page+1}) }}">Suivant</a>
+    {#                        {% endif %}#}
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <a class="static {% if page == 1%} active {% endif%}" href="{{ path('usersRolesPage', {'roles' : type, 'page' : 1}) }}">1</a>
                 {% endif %}
             </div>
         {% else %}
@@ -49,4 +60,5 @@
             </div>
         {% endif %}
     </div>
+
 {% endblock %}

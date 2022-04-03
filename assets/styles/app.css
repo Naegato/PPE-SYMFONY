@@ -6,13 +6,7 @@
 @import "_form.css";
 @import "_list.css";
 @import "_residence-card.css";
+@import "_user-nav.css";
+@import "_rent.css";
 
-.index-list {
-    list-style: '>' ;
-}
-
-.index-list a {
-    color: var(--text-secondary);
-    text-decoration: none;
-}
 

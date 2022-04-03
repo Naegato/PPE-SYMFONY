@@ -11,4 +11,14 @@ body {
 
 .color-custom-primary {
     color: var(--primary-color);
+    text-transform: capitalize;
+}
+
+.index-list {
+    list-style: '>' ;
+}
+
+.index-list a {
+    color: var(--text-secondary);
+    text-decoration: none;
 }

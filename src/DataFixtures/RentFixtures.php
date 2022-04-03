@@ -21,7 +21,6 @@ class RentFixtures extends Fixture implements DependentFixtureInterface
 
 //            dd($date);
 
-            $rent->setInventoryFile('');
             $rent->setArrivalDate(new \DateTime('2021-05-27'));
             $rent->setDepartureDate(new \DateTime('2022-05-27'));
             /** @var Residence $residence */

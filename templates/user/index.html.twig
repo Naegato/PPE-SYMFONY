@@ -29,8 +29,28 @@
         </div>
         <div class="col-12 offset-0 offset-md-2 col-md-6">
             <h1>
-                Mes Locations
+                {% if user.id == app.user.id %}
+                Mes
+                {% else %}
+                Les
+                {% endif %}
+                Locations
             </h1>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Date entrée</th>
+                    <th scope="col">Date sortie</th>
+                    <th scope="col">Locataire</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                {% for rent in rents %}
+                    {% include 'residence/residence-line.html.twig' with {'rent' : rent} %}
+                {% endfor %}
+            </table>
         </div>
     </div>
 

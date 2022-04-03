@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\ModifyFormType;
+use App\Repository\RentRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use mysql_xdevapi\Exception;
@@ -17,10 +18,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     private UserRepository $userRepository;
+    private RentRepository $rentRepository;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, RentRepository $rentRepository)
     {
         $this->userRepository = $userRepository;
+        $this->rentRepository = $rentRepository;
     }
 
     #[Route('/user', name: 'user')]
@@ -59,9 +62,12 @@ class UserController extends AbstractController
                 return $this->redirectToRoute('index');
             }
 
+            $rent = $this->rentRepository->findByTenant($user);
+
             return $this->render('user/index.html.twig', [
                 'modifyForm' => $form->createView(),
                 'user' => $user,
+                'rents' => $rent
             ]);
         } else {
             return $this->redirectToRoute('index');

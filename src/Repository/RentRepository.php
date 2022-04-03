@@ -61,6 +61,22 @@ class RentRepository extends ServiceEntityRepository
         return $rent;
     }
 
+    public function findByTenant($tenant){
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.tenant = :tenant')
+            ->setParameter('tenant',$tenant)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findById($id){
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.id = :id')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     // /**
     //  * @return Rent[] Returns an array of Rent objects
     //  */
