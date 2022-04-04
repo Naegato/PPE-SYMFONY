@@ -69,7 +69,7 @@
                 </p>
             </div>
 
-            <div class="rent-card {% if rent.tenantInventoryValidatedAt is defined and rent.tenantInventoryValidatedAt is not empty %} valid {% elseif rent.representativeValidedAt is defined and rent.representativeValidedAt is not empty and rent.representativeValidedAt|date('Y-m-d') >= rent.arrivalDate|date('Y-m-d') %}">
+            <div class="rent-card {% if rent.tenantInventoryValidatedAt is defined and rent.tenantInventoryValidatedAt is not empty %} valid {% elseif rent.representativeValidedAt is defined and rent.representativeValidedAt is not empty and rent.representativeValidedAt|date('Y-m-d') >= rent.arrivalDate|date('Y-m-d') %}needed {% endif %}">
             <h6>Signature fin état des lieux de l'inventaire</h6>
                 <h5>
                     {% if rent.tenantInventoryValidedAt is defined and rent.tenantInventoryValidedAt is not empty %}

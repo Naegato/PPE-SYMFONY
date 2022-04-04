@@ -54,7 +54,7 @@ class ResidenceController extends AbstractController
     #[Route('/bien/registration', name: 'bienRegistration')]
     public function registration(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger) {
 
-        if(!$this->isGranted("ROLE_REPRESENTATIVE",$this->getUser())){
+        if(!$this->isGranted("ROLE_ADMINISTRATOR",$this->getUser())){
             return $this->redirectToRoute('index');
         }
 
