@@ -19,51 +19,97 @@
         <h1 class="color-custom-primary mt-3">Synthèse</h1>
 
         <div class="d-flex flex-wrap">
-            <div class="rent-card valid">
+            <div class="rent-card {% if "now"|date('Y-m-d') >= rent.arrivalDate|date('Y-m-d') %} valid {% endif %}">
                 <h6>Arrivée du locataire</h6>
                 <h5>Arrivée le {{ rent.arrivalDate|date('d/m/Y') }}</h5>
                 <p>Le locataire est arrivé à la résidence</p>
             </div>
 
-            <div class="rent-card needed">
+            <div class="rent-card {% if rent.tenantValidedAt is defined and rent.tenantValidedAt is not empty %} valid {% elseif "now"|date('Y-m-d') >= rent.arrivalDate|date('Y-m-d') %} needed {% endif %}">
                 <h6>Signature de l'inventaire</h6>
-                <h5>Signé le {{ rent.arrivalDate|date('d/m/Y') }}</h5>
-                <p>par le locataire <strong>{% if rent.tenantComments is defined and rent.tenantComments is not empty %} avec un commentaire{% else %} sans commentaire{% endif %}</strong></p>
-            </div>
-
-            <div class="rent-card">
-                <h6>Signature de l'inventaire</h6>
-                <h5>Signé le {{ rent.arrivalDate|date('d/m/Y') }}</h5>
-                <p>par le mandataire <strong>{% if rent.representativeComments is defined and rent.representativeComments is not empty %} avec un commentaire{% else %} sans commentaire{% endif %}</strong></p>
-            </div>
-
-            <div class="rent-card">
-                <h6>Signature fin état des lieux de l'inventaire</h6>
-                <h5>Signé le {{ rent.arrivalDate|date('d/m/Y') }}</h5>
+                <h5>
+                    {% if rent.tenantValidedAt is defined and rent.tenantValidedAt is not empty %}
+                        Signé le {{ rent.tenantValidedAt|date('d/m/Y') }}
+                    {% else %}
+                        A Signé avant le {{ rent.departureDate|date('d/m/Y') }}
+                    {% endif %}
+                </h5>
                 <p>par le locataire
-{#     ????????               {% if rent.representative %}#}
-{#                    <strong>#}
-{#                        {% if rent.representativeComments is defined and rent.representativeComments is not empty %}#}
-{#                            avec un commentaire#}
-{#                        {% else %}#}
-{#                            sans commentaire#}
-{#                        {% endif %}#}
-{#                    </strong>#}
+                    {% if rent.tenantValidedAt is defined and rent.tenantValidedAt is not empty %}
+                        <strong>
+                            {% if rent.tenantComments is defined and rent.tenantComments is not empty %}
+                                avec un commentaire
+                            {% else %}
+                                sans commentaire
+                            {% endif %}
+                        </strong>
+                    {% endif %}
+                </p>
+            </div>
+
+            <div class="rent-card {% if rent.representativeValidedAt is defined and rent.representativeValidedAt is not empty %} valid {% elseif rent.tenantValidedAt is defined and rent.tenantValidedAt is not empty and rent.tenantValidedAt|date('Y-m-d') >= rent.arrivalDate|date('Y-m-d') %} needed {% endif %}">
+                <h6>Signature de l'inventaire</h6>
+                <h5>
+                    {% if rent.representativeValidedAt is defined and rent.representativeValidedAt is not empty %}
+                        Signé le {{ rent.representativeValidedAt|date('d/m/Y') }}
+                    {% else %}
+                        A Signé avant le {{ rent.departureDate|date('d/m/Y') }}
+                    {% endif %}
+                </h5>
+                <p>par le mandataire
+                    {% if rent.representativeValidedAt is defined and rent.representativeValidedAt is not empty %}
+                        <strong>
+                            {% if rent.representativeComments is defined and rent.representativeComments is not empty %}
+                                avec un commentaire
+                            {% else %}
+                                sans commentaire
+                            {% endif %}
+                        </strong>
+                    {% endif %}
+                </p>
+            </div>
+
+            <div class="rent-card {% if rent.tenantInventoryValidatedAt is defined and rent.tenantInventoryValidatedAt is not empty %} valid {% elseif rent.representativeValidedAt is defined and rent.representativeValidedAt is not empty and rent.representativeValidedAt|date('Y-m-d') >= rent.arrivalDate|date('Y-m-d') %}">
+            <h6>Signature fin état des lieux de l'inventaire</h6>
+                <h5>
+                    {% if rent.tenantInventoryValidedAt is defined and rent.tenantInventoryValidedAt is not empty %}
+                        Signé le {{ rent.tenantInventoryValidedAt|date('d/m/Y') }}
+                    {% else %}
+                        A Signé avant le {{ rent.departureDate|date('d/m/Y') }}
+                    {% endif %}
+                </h5>
+                <p>par le locataire
+                {% if rent.tenantInventoryValidedAt is defined and rent.tenantInventoryValidedAt is not empty %}
+                    <strong>
+                        {% if rent.tenantInventoryComments is defined and rent.tenantInventoryComments is not empty %}
+                            avec un commentaire
+                        {% else %}
+                            sans commentaire
+                        {% endif %}
+                    </strong>
+                {% endif %}
                 </p>
             </div>
 
             <div class="rent-card">
                 <h6>Signature fin état des lieux de l'inventaire</h6>
-                <h5>Signé le {{ rent.arrivalDate|date('d/m/Y') }}</h5>
-                <p>par le mandataire
-{#     ????????               {% if rent.representative %}#}
-{#                    <strong>#}
-{#                        {% if rent.representativeComments is defined and rent.representativeComments is not empty %}#}
-{#                            avec un commentaire#}
-{#                        {% else %}#}
-{#                            sans commentaire#}
-{#                        {% endif %}#}
-{#                    </strong>#}
+                <h5>
+                    {% if rent.representativeInventoryValidedAt is defined and rent.representativeInventoryValidedAt is not empty %}
+                        Signé le {{ rent.tenantInventoryValidedAt|date('d/m/Y') }}
+                    {% else %}
+                        A Signé avant le {{ rent.departureDate|date('d/m/Y') }}
+                    {% endif %}
+                </h5>
+                <p>par le locataire
+                    {% if rent.representativeInventoryValidedAt is defined and rent.representativeInventoryValidedAt is not empty %}
+                        <strong>
+                            {% if rent.representativeInventoryComments is defined and rent.representativeInventoryComments is not empty %}
+                                avec un commentaire
+                            {% else %}
+                                sans commentaire
+                            {% endif %}
+                        </strong>
+                    {% endif %}
                 </p>
             </div>
         </div>

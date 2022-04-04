@@ -32,6 +32,7 @@ class Residence
     #[ORM\Column(type: 'text')]
     private $inventory_file;
 
+
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
     private $owner;
@@ -42,6 +43,9 @@ class Residence
 
     #[ORM\Column(type: 'text')]
     private $image;
+
+    private $inventory_file_form;
+    private $image_form;
 
     public function getId(): int
     {
@@ -120,7 +124,7 @@ class Residence
         return $this;
     }
 
-    public function getOwner(): ?user
+    public function getOwner(): ?User
     {
         return $this->owner;
     }
@@ -132,7 +136,7 @@ class Residence
         return $this;
     }
 
-    public function getRepresentative(): User
+    public function getRepresentative(): ?User
     {
         return $this->representative;
     }
@@ -154,5 +158,37 @@ class Residence
         $this->image = $image;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInventoryFileForm()
+    {
+        return $this->inventory_file_form;
+    }
+
+    /**
+     * @param mixed $inventory_file_form
+     */
+    public function setInventoryFileForm($inventory_file_form): void
+    {
+        $this->inventory_file_form = $inventory_file_form;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImageForm()
+    {
+        return $this->image_form;
+    }
+
+    /**
+     * @param mixed $image_form
+     */
+    public function setImageForm($image_form): void
+    {
+        $this->image_form = $image_form;
     }
 }

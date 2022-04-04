@@ -5,8 +5,17 @@
     <div class="container d-flex flex-wrap m-5">
         {% if residence is defined and residence is not empty %}
             <div class="col-12 col-md-4 mb-4">
-                <img src="{{ residence.image }}">
+                {% set image = 'uploads/' ~ residence.image %}
+                <img class="col-12" src="{% if residence.image|length <= 255 %}{{ asset(image) }}{% else %}{{ residence.image }}{% endif %}">
                 {{ form_start(modifyForm) }}
+                <div class="hidden">
+                    {{ form_row(modifyForm.owner, {
+                        'label': 'Propriétaire'
+                    }) }}
+                    {{ form_row(modifyForm.representative, {
+                        'label': 'Mandataire'
+                    }) }}
+                </div>
                 <div class="form-label-display">
                     {{ form_row(modifyForm.name, {
                         'label': 'Nom de la residence'
@@ -35,16 +44,16 @@
                         'label': 'Pays'
                     }) }}
                 </div>
-{#                <div class="form-label-display">#}
-{#                    {{ form_row(modifyForm.inventory_file, {#}
-{#                        'label': 'Gabarit inventaire'#}
-{#                    }) }}#}
-{#                </div>#}
-{#                <div class="form-label-display">#}
-{#                    {{ form_row(modifyForm.image, {#}
-{#                        'label': 'Photo'#}
-{#                    }) }}#}
-{#                </div>#}
+                <div class="form-label-display">
+                    {{ form_row(modifyForm.inventory_file_form, {
+                        'label': 'Gabarit inventaire'
+                    }) }}
+                </div>
+                <div class="form-label-display">
+                    {{ form_row(modifyForm.image_form, {
+                        'label': 'Photo'
+                    }) }}
+                </div>
 
                 <button type="submit" name="id" value="{{ residence.id }}">Mettre a jour les données</button>
                 {{ form_end(modifyForm) }}

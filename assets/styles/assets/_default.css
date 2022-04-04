@@ -4,6 +4,10 @@ body {
     flex-direction: column;
 }
 
+.hidden {
+    display: none;
+}
+
 .btn-custom {
     background-color: var(--primary-color);
     color: var(--text-light);
@@ -21,4 +25,9 @@ body {
 .index-list a {
     color: var(--text-secondary);
     text-decoration: none;
+}
+
+.user-residence-view {
+    max-height: 600px;
+    overflow-y: scroll;
 }

@@ -77,6 +77,24 @@ class ResidenceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findByOwner($owner) {
+
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.owner = :val')
+            ->setParameter('val', $owner)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByRepresentative($representative) {
+
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.representative = :val')
+            ->setParameter('val', $representative)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findAllocatedByCity(string $city) {
         $city = "%$city%";
         $entityManager = $this->getEntityManager();

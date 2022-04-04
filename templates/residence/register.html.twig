@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="m-2 m-md-5 col-10 col-md-8 col-lg-4">
+
+        <h1>Ajout d'une résidence</h1>
+
+        {{ form_start(form) }}
+
+        <div class="form-label-display">
+            {{ form_row(form.owner, {
+                'label': 'Propriétaire'
+            }) }}
+        </div>
+        <div class="form-label-display">
+            {{ form_row(form.representative, {
+                'label': 'Mandataire'
+            }) }}
+        </div>
+        <div class="form-label-display">
+            {{ form_row(form.name, {
+                'label': 'Nom de la résidence'
+            }) }}
+        </div>
+        <div class="form-label-display">
+            {{ form_row(form.address, {
+                'label': 'Adresse'
+            }) }}
+        </div>
+        <div class="form-label-display">
+            {{ form_row(form.city, {
+                'label': 'Ville'
+            }) }}
+        </div>
+        <div class="form-label-display">
+            {{ form_row(form.zip_code, {
+                'label': 'Code postal'
+            }) }}
+        </div>
+        <div class="form-label-display">
+            {{ form_row(form.country, {
+                'label': 'Pays'
+            }) }}
+        </div>
+        <div class="form-label-display">
+            {{ form_row(form.inventory_file_form, {
+                'label': 'Gabarit inventaire'
+            }) }}
+        </div>
+        <div class="form-label-display">
+            {{ form_row(form.image_form) }}
+        </div>
+
+        <button class="btn btn-success">Ajouter</button>
+
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

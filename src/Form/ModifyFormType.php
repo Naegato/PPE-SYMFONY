@@ -18,15 +18,15 @@ class ModifyFormType extends AbstractType
             ->add('email', EmailType::class)
             ->add('name')
             ->add('lastname')
-//            ->add('password', RepeatedType::class, [
-//            'type' => PasswordType::class,
-//            'invalid_message' => 'Les mots de passe ne sont pas semblables',
-//            'options' => ['attr' => ['class' => 'password-field']],
-//            'required' => false,
-//            'first_options'  => ['label' => 'Mot de passe'],
-//            'second_options' => ['label' => 'Confirmer le mot de passe'],
-//            'empty_data' => '',
-//        ])
+            ->add('plainPassword', RepeatedType::class, [
+            'type' => PasswordType::class,
+            'invalid_message' => 'Les mots de passe ne sont pas semblables',
+            'options' => ['attr' => ['class' => 'password-field']],
+            'required' => false,
+            'first_options'  => ['label' => 'Mot de passe'],
+            'second_options' => ['label' => 'Confirmer le mot de passe'],
+            'empty_data' => '',
+        ])
         ;
     }
 

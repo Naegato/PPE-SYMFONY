@@ -28,13 +28,6 @@ class RentFixtures extends Fixture implements DependentFixtureInterface
             $rent->setResidence($residence);
             $rent->setTenant($tenant);
 
-            $rent->setRepresentativeComments('');
-            $rent->setRepresentativeSignature('');
-            $rent->setRepresentativeValidatedAt(new \DateTime('2021-05-27'));
-            $rent->setTenantComments('');
-            $rent->setTenantSignature('');
-            $rent->setTenantValidatedAt(new \DateTime('2021-05-27'));
-
             $manager->persist($rent);
         }
 

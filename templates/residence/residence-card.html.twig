@@ -1,5 +1,6 @@
 <div class="mb-3 d-flex residence-card">
-    <img src="{{ residence.image }}">
+    {% set image = 'uploads/' ~ residence.image %}
+    <img src="{% if residence.image|length <= 255 %}{{ asset(image) }}{% else %}{{ residence.image }}{% endif %}">
     <div class="ms-3">
         <h1>
             {{ residence.name }}
@@ -21,7 +22,6 @@
         </div>
         {% set location = 0 %}
         {% for rent in rents %}
-{#            {{ dump(rent) }}#}
             {% if rent.residence.id == residence.id %}
                 {% set location = location + 1 %}
             {% endif %}
