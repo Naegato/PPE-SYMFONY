@@ -20,6 +20,8 @@ class ResidenceController extends AbstractController
     #[Route('/biens', name: 'biens')]
     public function biens(Request $request): Response
     {
+        dd($this->residenceRepository->findAllocatedByCity("Senlis"));
+
         $selectedCity = $request->request->get("selectedCity");
 
         if ($selectedCity) {
