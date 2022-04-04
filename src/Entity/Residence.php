@@ -29,7 +29,7 @@ class Residence
     #[ORM\Column(type: 'string', length: 255)]
     private $country;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'text')]
     private $inventory_file;
 
     #[ORM\ManyToOne(targetEntity: User::class)]

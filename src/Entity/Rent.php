@@ -17,10 +17,6 @@ class Rent
     #[ORM\JoinColumn(nullable: false)]
     private $tenant;
 
-
-    #[ORM\Column(type: 'text')]
-    private $inventory_file;
-
     #[ORM\Column(type: 'datetime')]
     private $arrival_date;
 
@@ -45,7 +41,7 @@ class Rent
     #[ORM\Column(type: 'datetime')]
     private $tenant_validated_at;
 
-    #[ORM\ManyToOne(targetEntity: residence::class)]
+    #[ORM\ManyToOne(targetEntity: Residence::class)]
     #[ORM\JoinColumn(nullable: false)]
     private $residence;
 
@@ -74,18 +70,6 @@ class Rent
     public function setResidence(?Residence $residence): self
     {
         $this->residence = $residence;
-
-        return $this;
-    }
-
-    public function getInventoryFile(): ?string
-    {
-        return $this->inventory_file;
-    }
-
-    public function setInventoryFile(string $inventory_file): self
-    {
-        $this->inventory_file = $inventory_file;
 
         return $this;
     }

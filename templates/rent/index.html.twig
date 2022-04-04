@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="m-0 m-md-5 container row">
+
+        <div class="col-12 d-flex rent-residence">
+            <img class="col-5" src="{{ rent.residence.image }}" alt="image">
+            <div class="ms-3">
+                <h1 class="color-custom-primary">{{ rent.residence.name }}</h1>
+                <div class="d-flex align-items-start">
+                    <h5>Locataire :</h5>
+                    <p class="ms-3">{{ rent.tenant.name }} {{ rent.tenant.lastname }}</p>
+                </div>
+                <p><a download="gabarit.pdf" class="color-custom-primary" href="{{ rent.residence.inventoryFile }}">Télécharger</a> le gabarit</p>
+            </div>
+        </div>
+
+        <h1 class="color-custom-primary mt-3">Synthèse</h1>
+
+        <div class="d-flex flex-wrap">
+            <div class="rent-card valid">
+                <h6>Arrivée du locataire</h6>
+                <h5>Arrivée le {{ rent.arrivalDate|date('d/m/Y') }}</h5>
+                <p>Le locataire est arrivé à la résidence</p>
+            </div>
+
+            <div class="rent-card needed">
+                <h6>Signature de l'inventaire</h6>
+                <h5>Signé le {{ rent.arrivalDate|date('d/m/Y') }}</h5>
+                <p>par le locataire <strong>{% if rent.tenantComments is defined and rent.tenantComments is not empty %} avec un commentaire{% else %} sans commentaire{% endif %}</strong></p>
+            </div>
+
+            <div class="rent-card">
+                <h6>Signature de l'inventaire</h6>
+                <h5>Signé le {{ rent.arrivalDate|date('d/m/Y') }}</h5>
+                <p>par le mandataire <strong>{% if rent.representativeComments is defined and rent.representativeComments is not empty %} avec un commentaire{% else %} sans commentaire{% endif %}</strong></p>
+            </div>
+
+            <div class="rent-card">
+                <h6>Signature fin état des lieux de l'inventaire</h6>
+                <h5>Signé le {{ rent.arrivalDate|date('d/m/Y') }}</h5>
+                <p>par le locataire
+{#     ????????               {% if rent.representative %}#}
+{#                    <strong>#}
+{#                        {% if rent.representativeComments is defined and rent.representativeComments is not empty %}#}
+{#                            avec un commentaire#}
+{#                        {% else %}#}
+{#                            sans commentaire#}
+{#                        {% endif %}#}
+{#                    </strong>#}
+                </p>
+            </div>
+
+            <div class="rent-card">
+                <h6>Signature fin état des lieux de l'inventaire</h6>
+                <h5>Signé le {{ rent.arrivalDate|date('d/m/Y') }}</h5>
+                <p>par le mandataire
+{#     ????????               {% if rent.representative %}#}
+{#                    <strong>#}
+{#                        {% if rent.representativeComments is defined and rent.representativeComments is not empty %}#}
+{#                            avec un commentaire#}
+{#                        {% else %}#}
+{#                            sans commentaire#}
+{#                        {% endif %}#}
+{#                    </strong>#}
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

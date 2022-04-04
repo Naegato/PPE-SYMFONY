@@ -1,0 +1,13 @@
+.user-navigation a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+}
+
+.user-navigation .static {
+    color: #003ba8;
+}
+
+.user-navigation .active {
+    color: #9f9f00;
+}

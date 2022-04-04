@@ -1,0 +1,12 @@
+<tr>
+{#    {{ dump(rent) }}#}
+    <th scope="row">{{ rent.id }}</th>
+    <td>{{ rent.arrivalDate|date("d-m-Y") }}</td>
+    <td>{{ rent.departureDate|date("d-m-Y") }}</td>
+    <td>{{ rent.tenant.name }} {{ rent.tenant.lastname }}</td>
+    <td>
+        <form method="post" action="{{ path('rent') }}">
+            <button class="btn btn-custom" name="id" value="{{ rent.id }}">Accéder</button>
+        </form>
+    </td>
+</tr>
