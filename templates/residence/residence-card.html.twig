@@ -1,15 +1,35 @@
 <div class="mb-3 d-flex residence-card">
-    <img src="data:image/png;base64, {{ residence.image }}">
+    {% set image = 'uploads/' ~ residence.image %}
+    <img src="{% if residence.image|length <= 255 %}{{ asset(image) }}{% else %}{{ residence.image }}{% endif %}">
     <div class="ms-3">
         <h1>
             {{ residence.name }}
         </h1>
-        <h6>Disponible</h6>
+        {% set occuped = false %}
+        {% set atDate = '' %}
+        {% for rent in rents %}
+            {% if rent.residence.id == residence.id %}
+                {% if rent.arrivalDate|date("Y-m-d") < "now"|date('Y-m-d') and rent.departureDate|date("Y-m-d") > "now"|date('Y-m-d') %}
+                    {% set occuped = true %}
+                    {% set atDate = rent.departureDate|date("d-m-Y") %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        <h6>{% if occuped == true %} Disponible le {% if atDate is defined and atDate is not empty%} {{ atDate }} {% endif%} {% else %}Disponible{% endif %}</h6>
         <div class="d-flex">
-            <p>Non Occupé</p>
-            <p class="ms-5">Gérée par {{ residence.representative.name }}</p>
+            <p>{% if occuped == true %}Actuellement Occupé{% else %}Non Occupé{% endif %}</p>
+            <p class="ms-5">Gérée par {{ residence.representative.name }} {{ residence.representative.lastname }}</p>
         </div>
-        <p>? locations au total</p>
-        <a href="#" class="btn btn-custom">Acceder</a>
+        {% set location = 0 %}
+        {% for rent in rents %}
+            {% if rent.residence.id == residence.id %}
+                {% set location = location + 1 %}
+            {% endif %}
+        {% endfor %}
+        <p>{{ location }} locations au total</p>
+        <form method="post" action="{{ path('bien') }}">
+            <button class="btn btn-custom" name="id" value="{{ residence.id }}">Acceder</button>
+        </form>
+{#        <a href="{{ path('bien', {"residence" : residence.id}) }}" class="btn btn-custom">Acceder</a>#}
     </div>
 </div>

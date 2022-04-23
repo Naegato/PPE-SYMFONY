@@ -13,18 +13,18 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link {% if route == 'index' %}active{% endif %}" aria-current="page" href="{{ path('index') }}">Acceuil</a>
+                    <a class="nav-link {% if route == 'index' %}active{% endif %}" aria-current="page" href="{{ path('index') }}">Accueil</a>
                 {% if app.user %}
                     <li class="nav-item">
                         <a class="nav-link {% if route == 'biens' %}active{% endif %}" href="{{ path('biens') }}">Biens</a>
                     </li>
                     {% if app.user.roles[0] != 'ROLE_TENANT' %}
                         <li class="nav-item">
-                            <a class="nav-link {% if route == 'tenants' %}active{% endif %}" href="{{ path('tenants') }}">Locataire</a>
+                            <a class="nav-link {% if route == 'tenants' %}active{% endif %}" href="{{ path('usersRoles',{"roles":'tenant'}) }}">Locataire</a>
                         </li>
                         {% if app.user.roles[0] == 'ROLE_ADMINISTRATOR' %}
                             <li class="nav-item">
-                                <a class="nav-link {% if route == 'representatives' %}active{% endif %}" href="{{ path('representatives') }}">Mandataire</a>
+                                <a class="nav-link {% if route == 'representatives' %}active{% endif %}" href="{{ path('usersRoles',{"roles":'representative'}) }}">Mandataire</a>
                             </li>
                         {% endif %}
                     {% endif %}

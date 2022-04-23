@@ -37,6 +37,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255)]
     private $lastname;
 
+    private $plainPassword;
+
+    public function getPlainPassword(): ?string {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $string): self
+    {
+        $this->plainPassword = $string;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,7 +89,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles(?array $roles): self
     {
         $this->roles = $roles;
 
@@ -86,12 +99,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see PasswordAuthenticatedUserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(?string $password): self
     {
         $this->password = $password;
 

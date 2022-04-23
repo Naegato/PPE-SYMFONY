@@ -19,18 +19,58 @@
             <div class="form-label-display">
                 {{ form_row(modifyForm.email) }}
             </div>
-{#            <div class="form-label-display">#}
-{#                {{ form_row(modifyForm.password, {#}
-{#                    'label': 'Mot de passe'#}
-{#                }) }}#}
-{#            </div>#}
+            <div class="form-label-display">
+                {{ form_row(modifyForm.plainPassword, {
+                    'label': 'Mot de passe'
+                }) }}
+            </div>
             <button type="submit" class="mt-1 btn btn-success" name="id" value="{{ user.id }}">Mettre a jour</button>
             {{ form_end(modifyForm) }}
         </div>
         <div class="col-12 offset-0 offset-md-2 col-md-6">
             <h1>
-                Mes Locations
+                {% if user.roles[0] == "ROLE_TENANT" %}
+    {#                {{ dump(user.roles) }}#}
+                    {% if user.id == app.user.id %}
+                    Mes
+                    {% else %}
+                    Les
+                    {% endif %}
+                    Locations
+                <a class="btn btn-success">Ajouter une location</a>
+                {% elseif user.roles[0] == "ROLE_REPRESENTATIVE" %}
+                    Location gérée
+                {% else %}
+                    Location possédée
+                {% endif %}
+
             </h1>
+
+            {% if user.roles[0] == "ROLE_TENANT" %}
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Date entrée</th>
+                        <th scope="col">Date sortie</th>
+                        <th scope="col">Locataire</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    {% for rent in rents %}
+                        {% include 'residence/residence-line.html.twig' with {'rent' : rent} %}
+                    {% endfor %}
+                </table>
+            {% else %}
+                <div class="container user-residence-view">
+                    {% if residences is defined and residences is not empty %}
+                        {% for bien in residences %}
+                            {% include 'residence/residence-card.html.twig' with {'residence' : bien, 'rents': alocated} %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endif %}
+
         </div>
     </div>
 

@@ -22,42 +22,47 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-         $user = new User();
+         $admin = new User();
 
-         $user->setEmail("admin@admin.fr");
-         $user->setRoles(["ROLE_ADMINISTRATOR"]);
-         $user->setName('admin');
-         $user->setLastname('admin');
+         $admin->setEmail("admin@admin.fr");
+         $admin->setRoles(["ROLE_ADMINISTRATOR"]);
+         $admin->setName('admin');
+         $admin->setLastname('admin');
 
-         $password = $this->hasher->hashPassword($user, '123456');
-         $user->setPassword($password);
+         $passwordAdmin = $this->hasher->hashPassword($admin, '123456');
+         $admin->setPassword($passwordAdmin);
 
-         $manager->persist($user);
+         $manager->persist($admin);
 
-         $user2 = new User();
 
-         $user2->setEmail("1@1.fr");
-         $user2->setRoles(["ROLE_TENANT"]);
-         $user2->setName('1');
-         $user2->setLastname('1');
+         for ($i = 0; $i < 25; $i++) {
 
-         $password2 = $this->hasher->hashPassword($user2, '123456');
-         $user2->setPassword($password2);
+             $tenant = new User();
 
-         $manager->persist($user2);
+             $tenant->setEmail("tenant$i@tenant.fr");
+             $tenant->setRoles(["ROLE_TENANT"]);
+             $tenant->setName("tenant$i");
+             $tenant->setLastname('tenant');
 
-         $user3 = new User();
-         $user3->setEmail("2@2.fr");
-         $user3->setRoles(["ROLE_REPRESENTATIVE"]);
-         $user3->setName('3');
-         $user3->setLastname('3');
-         $password3 = $this->hasher->hashPassword($user3, '123456');
-         $user3->setPassword($password3);
-         $manager->persist($user3);
+             $passwordTenant = $this->hasher->hashPassword($tenant, '123456');
+             $tenant->setPassword($passwordTenant);
 
-         $this->addReference(self::ADMIN, $user);
-         $this->addReference(self::TENANT, $user2);
-         $this->addReference(self::REPRESENTATIVE, $user3);
+             $manager->persist($tenant);
+         }
+
+         $representative = new User();
+         $representative->setEmail("representative@representative.fr");
+         $representative->setRoles(["ROLE_REPRESENTATIVE"]);
+         $representative->setName('representative');
+         $representative->setLastname('representative');
+         $passwordRepresentative = $this->hasher->hashPassword($representative, '123456');
+         $representative->setPassword($passwordRepresentative);
+         $manager->persist($representative);
+
+         $this->addReference(self::ADMIN, $admin);
+         $this->addReference(self::TENANT, $tenant);
+         $this->addReference(self::REPRESENTATIVE, $representative);
+         
 
          $manager->flush();
 
