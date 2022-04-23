@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Residence;
-use App\Form\ResidenceModifyFormType;
+use App\Form\ResidenceFormType;
 use App\Repository\RentRepository;
 use App\Repository\ResidenceRepository;
 use Doctrine\ORM\EntityManagerInterface;

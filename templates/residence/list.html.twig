@@ -20,7 +20,7 @@
                 </div>
                 <button class="btn btn-primary">Afficher</button>
             </form>
-            <a class="ms-3 btn btn-success" href="#">Ajouter un bien</a>
+            <a class="ms-3 btn btn-success" href="{{ path('bienRegistration') }}">Ajouter un bien</a>
         </div>
         <div class="container">
             {% if biens is defined and biens is not empty %}

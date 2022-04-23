@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ModifyFormType;
 use App\Repository\RentRepository;
+use App\Repository\ResidenceRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use mysql_xdevapi\Exception;
@@ -19,18 +20,19 @@ class UserController extends AbstractController
 {
     private UserRepository $userRepository;
     private RentRepository $rentRepository;
+    private ResidenceRepository $residenceRepository;
 
-    public function __construct(UserRepository $userRepository, RentRepository $rentRepository)
+    public function __construct(UserRepository $userRepository, RentRepository $rentRepository, ResidenceRepository $residenceRepository)
     {
         $this->userRepository = $userRepository;
         $this->rentRepository = $rentRepository;
+        $this->residenceRepository = $residenceRepository;
     }
 
     #[Route('/user', name: 'user')]
     public function user(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         $id = $request->request->get('id');
-//        dd($id);
         if ($id) {
             $user = $this->userRepository->findUserById($id);
             $connected = $this->getUser();
@@ -45,11 +47,11 @@ class UserController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 try {
-                    if ($form->get('password')->getData()) {
+                    if ($form->get('plainPassword')->getData()) {
                         $user->setPassword(
                             $userPasswordHasher->hashPassword(
                                 $user,
-                                $form->get('password')->getData()
+                                $form->get('plainPassword')->getData()
                             )
                         );
                     }
@@ -64,10 +66,22 @@ class UserController extends AbstractController
 
             $rent = $this->rentRepository->findByTenant($user);
 
+            $allRent = $this->rentRepository->findAll();
+
+            $residences = [];
+
+            if ($user->getRoles()[0] == "ROLE_REPRESENTATIVE"){
+                $residences = $this->residenceRepository->findByRepresentative($user);
+            } else if ($user->getRoles()[0] == "ROLE_ADMINISTRATOR") {
+                $residences = $this->residenceRepository->findByOwner($user);
+            }
+
             return $this->render('user/index.html.twig', [
                 'modifyForm' => $form->createView(),
                 'user' => $user,
-                'rents' => $rent
+                'rents' => $rent,
+                'residences' => $residences,
+                'alocated' => $allRent,
             ]);
         } else {
             return $this->redirectToRoute('index');

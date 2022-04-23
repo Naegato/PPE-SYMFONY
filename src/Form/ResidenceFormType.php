@@ -3,23 +3,54 @@
 namespace App\Form;
 
 use App\Entity\Residence;
+use App\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ResidenceModifyFormType extends AbstractType
+class ResidenceFormType extends AbstractType
 {
+    private UserRepository $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $owners = $this->userRepository->findUserByRoles('["ROLE_ADMINISTRATOR"]');
+
+        $ownerChoice = [];
+
+        foreach ($owners as $owner) {
+            $ownerChoice[$owner->getName()] = $owner;
+        }
+
+        $representatives = $this->userRepository->findUserByRoles('["ROLE_REPRESENTATIVE"]');
+
+        $representativeChoice = [];
+
+        foreach ($representatives as $representative) {
+            $representativeChoice[$representative->getName()] = $representative;
+        }
+
         $builder
+            ->add('owner', ChoiceType::class, [
+                'choices'  => $ownerChoice,
+            ])
+            ->add('representative', ChoiceType::class, [
+                'choices'  => $representativeChoice,
+            ])
             ->add('name')
             ->add('address')
             ->add('city')
             ->add('zip_code')
             ->add('country')
-//            ->add('inventory_file', FileType::class, ['data_class' => null,'required' => false])
-//            ->add('image', FileType::class, ['data_class' => null,'required' => false])
+            ->add('inventory_file_form', FileType::class, ['required' => false])
+            ->add('image_form', FileType::class, ['required' => false])
         ;
     }
 

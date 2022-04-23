@@ -3,14 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Residence;
-use App\Form\ResidenceModifyFormType;
+use App\Form\ResidenceFormType;
 use App\Repository\RentRepository;
 use App\Repository\ResidenceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ResidenceController extends AbstractController
 {
@@ -49,9 +51,79 @@ class ResidenceController extends AbstractController
         ]);
     }
 
+    #[Route('/bien/registration', name: 'bienRegistration')]
+    public function registration(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger) {
+
+        if(!$this->isGranted("ROLE_ADMINISTRATOR",$this->getUser())){
+            return $this->redirectToRoute('index');
+        }
+
+        $residence = new Residence();
+
+        $form = $this->createForm(ResidenceFormType::class, $residence);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $inventoryFile = $form->get('inventory_file_form')->getData();
+
+//            if ($inventoryFile) {
+                $inventoryFileoriginalFilename = pathinfo($inventoryFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $inventoryFilesafeFilename = $slugger->slug($inventoryFileoriginalFilename);
+                $inventoryFilenewFilename = $inventoryFilesafeFilename.'-'.uniqid().'.'.$inventoryFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $inventoryFile->move(
+                        $this->getParameter('file_upload'),
+                        $inventoryFilenewFilename
+                    );
+                } catch (FileException $e) { }
+
+                $residence->setInventoryFile($inventoryFilenewFilename);
+//            }
+
+            $image = $form->get('image_form')->getData();
+
+//            if ($image) {
+                $imageoriginalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $imagesafeFilename = $slugger->slug($imageoriginalFilename);
+                $imagenewFilename = $imagesafeFilename.'-'.uniqid().'.'.$image->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $image->move(
+                        $this->getParameter('file_upload'),
+                        $imagenewFilename
+                    );
+                } catch (FileException $e) { }
+
+                $residence->setImage($imagenewFilename);
+//            }
+
+
+            $entityManager->persist($residence);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('biens');
+        }
+
+        return $this->render('residence/register.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
     #[Route('/bien', name: 'bien')]
     public function bien(Request $request, EntityManagerInterface $entityManager): Response
     {
+        if(!$this->isGranted("ROLE_REPRESENTATIVE",$this->getUser())){
+            return $this->redirectToRoute('biens');
+        }
+
+
         $id = $request->request->get("id");
 
         if (!$id) {
@@ -59,11 +131,9 @@ class ResidenceController extends AbstractController
         }
 
         $residence = $this->residenceRepository->findById($id);
-//        dd($id);
         $rent = $this->rentRepository->findAllRentByResidence($id);
-//        dd($rent);
 
-        $form = $this->createForm(ResidenceModifyFormType::class, $residence);
+        $form = $this->createForm(ResidenceFormType::class, $residence);
 
         $form->handleRequest($request);
 
