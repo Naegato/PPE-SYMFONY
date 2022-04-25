@@ -2,12 +2,14 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\ContactTenant;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class UserFixtures extends Fixture
+class UserFixtures extends Fixture implements DependentFixtureInterface
 {
     private UserPasswordHasherInterface $hasher;
 
@@ -43,6 +45,8 @@ class UserFixtures extends Fixture
              $tenant->setRoles(["ROLE_TENANT"]);
              $tenant->setName("tenant$i");
              $tenant->setLastname('tenant');
+             $tenant->setContactTenant($this->getReference(ContactTenantFixtures::FIRST_ADDRESS));
+
 
              $passwordTenant = $this->hasher->hashPassword($tenant, '123456');
              $tenant->setPassword($passwordTenant);
@@ -66,5 +70,12 @@ class UserFixtures extends Fixture
 
          $manager->flush();
 
+    }
+
+    public function getDependencies()
+    {
+        return [
+            ContactTenantFixtures::class,
+        ];
     }
 }

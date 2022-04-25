@@ -39,6 +39,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     private $plainPassword;
 
+    #[ORM\OneToOne(targetEntity: ContactTenant::class, cascade: ['persist', 'remove'])]
+    private $contactTenant;
+
     public function getPlainPassword(): ?string {
         return $this->plainPassword;
     }
@@ -140,6 +143,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getContactTenant(): ?ContactTenant
+    {
+        return $this->contactTenant;
+    }
+
+    public function setContactTenant(?ContactTenant $contactTenant): self
+    {
+        $this->contactTenant = $contactTenant;
 
         return $this;
     }
